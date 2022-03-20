@@ -1,14 +1,20 @@
 package org.Team1.technico.service;
 
+import lombok.AllArgsConstructor;
 import org.Team1.technico.model.Repair;
 import org.Team1.technico.repository.RepairRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class RepairServiceImp implements RepairService {
+@AllArgsConstructor
+
+@Service
+public class RepairServiceImpl implements RepairService {
     private RepairRepository repository;
+
     @Override
     public Repair createRepair(Repair repair) {
         return repository.save(repair);
