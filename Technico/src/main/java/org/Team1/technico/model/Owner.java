@@ -29,5 +29,5 @@ public class Owner {
     @OneToMany(mappedBy = "owner")
     private List<Property> properties;
     @OneToMany(mappedBy = "owner")
-    private List<Repair> repair;
+    private List<Repair> repairs;
 }
