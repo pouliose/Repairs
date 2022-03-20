@@ -1,6 +1,5 @@
 package org.Team1.technico.service;
 
-import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.model.Property;
 
 import java.util.List;
@@ -16,13 +15,8 @@ public interface PropertyService {
 
     boolean deleteProperty(int propertyId);
 
-    boolean addProperty(int ownerId, Property property);
+    //boolean addProperty(int ownerId, Property property);
 
-    List<PropertyDto> productsInBasket(int basketId);
-
-    boolean createProperties(int ownerId);
-
-    List<PropertyDto> properties(int ownerId);
 
 }
 
