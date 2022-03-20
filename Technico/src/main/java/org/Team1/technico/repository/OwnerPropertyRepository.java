@@ -11,8 +11,7 @@ import java.util.Properties;
 
 public interface OwnerPropertyRepository extends JpaRepository<Owner, Property> {
 
-    @Query("Select bp from BasketProduct bp where bp.basket.id = :basketId and bp.product.id= :productId")
-    Optional<Properties> findByOwnerProperty(int ownerId, int propertyId);
+
 
 
 }

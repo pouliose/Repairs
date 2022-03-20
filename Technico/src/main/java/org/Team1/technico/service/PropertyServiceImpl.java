@@ -2,13 +2,9 @@ package org.Team1.technico.service;
 
 
 import lombok.AllArgsConstructor;
-import org.Team1.technico.TechnicoMain;
 import org.Team1.technico.model.Property;
-import org.Team1.technico.repository.OwnerPropertyRepository;
-import org.Team1.technico.repository.OwnerRepository;
+import org.Team1.technico.model.Repair;
 import org.Team1.technico.repository.PropertyRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,15 +15,13 @@ import java.util.Optional;
 
 public class PropertyServiceImpl implements PropertyService {
 
-    private PropertyRepository propertyRepository;
-    private OwnerRepository ownerRepository;
-    private OwnerPropertyRepository ownerPropertyRepository;
-    private static final Logger logger = LoggerFactory.getLogger(TechnicoMain.class);
+    private PropertyRepository repository;
+
 
 
     @Override
     public Property createProperty(Property property) {
-        return propertyRepository.save(property);
+        return repository.save(property);
     }
 
 //    private boolean validateIdentityE9(int identityE9) {
@@ -46,17 +40,21 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public List<Property> readProperty() {
-        return propertyRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Property readProperty(int propertyId) {
-        return propertyRepository.findById(propertyId).get();
+        Optional<Property> propertyDb = repository.findById(propertyId);
+        if (propertyDb.isEmpty())
+                return null;
+
+        return propertyDb.get();
     }
 
     @Override
     public Property updateProperty(int propertyId, Property property) {
-        Optional<Property> propertyDb = propertyRepository.findById(propertyId);
+        Optional<Property> propertyDb = repository.findById(propertyId);
         if (propertyDb.isEmpty())
             return null;
         try {
@@ -67,7 +65,7 @@ public class PropertyServiceImpl implements PropertyService {
                             match.setAddress(property.getAddress());
                             match.setConstructionYear(property.getConstructionYear());
                             match.setPropertyType(property.getPropertyType());
-                            return propertyRepository.save(match);
+                            return repository.save(match);
                         } catch (Exception e) {
                             e.getMessage();
                             return null;
@@ -81,7 +79,13 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public boolean deleteProperty(int propertyId) {
-        return false;
+        Optional<Property> propertyDb = Optional.ofNullable(readProperty(propertyId));
+        if (propertyDb.isEmpty())
+            return false;
+        repository.delete(propertyDb.get());
+        return true;
+
+
     }
 
 //    @Override
