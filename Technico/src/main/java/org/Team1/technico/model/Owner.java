@@ -17,13 +17,13 @@ import java.util.List;
 public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(unique=true)
-    private int vatNumber;
+    private String vatNumber;
     private String firstName;
     private String lastName;
     private String address;
-    private int phoneNumber;
+    private String phoneNumber;
     @Column(unique=true)
     private String email;
     @Column(unique=true)

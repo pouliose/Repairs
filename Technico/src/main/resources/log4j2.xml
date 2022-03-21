@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <!-- Logging Properties -->
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %5p ${hostName} - {%15.15t} %30.30c{1.} : %m%n%ex
+        </Property>
+        <Property name="APP_LOG_ROOT">c:/temp/logs</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingRandomAccessFile name="RollingRandomAccessFileAppender"
+                                 fileName="logs/java-path-core-maven.log"
+                                 filePattern="logs/java-path-core-maven-%d{yyyy-MM-dd}.zip">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs">
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="org.Team1" additivity="false" level="debug">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingRandomAccessFileAppender"/>
+        </AsyncLogger>
+
+
+        <Root level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingRandomAccessFileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

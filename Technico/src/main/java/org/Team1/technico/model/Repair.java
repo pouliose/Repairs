@@ -1,5 +1,6 @@
 package org.Team1.technico.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,11 @@ public class Repair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDate registrationDate;
+    private LocalDateTime registrationDate;
+    @JsonIgnore
     @ManyToOne
     private Property property;
-    private LocalDateTime completionDate;
+    private LocalDate completionDate;
     private RepairStatus repairStatus;
     private RepairType repairType;
     private BigDecimal cost;

@@ -1,5 +1,6 @@
 package org.Team1.technico.service;
 
+import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.model.Property;
 
 import java.util.List;
@@ -15,7 +16,9 @@ public interface PropertyService {
 
     boolean deleteProperty(int propertyId);
 
-    //boolean addProperty(int ownerId, Property property);
+    boolean addPropertyToOwner(int propertyId, int ownerId);
+
+    List<PropertyDto> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber);
 
 
 }
