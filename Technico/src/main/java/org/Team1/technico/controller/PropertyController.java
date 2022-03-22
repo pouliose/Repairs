@@ -48,10 +48,10 @@ public class PropertyController {
         return propertyService.deleteProperty(propertyId);
     }
 
-    @PostMapping(value = "/{propertyId}/owners/{ownerId}")
-    public boolean addPropertyToOwner(@PathVariable("propertyId") int propertyId, @PathVariable("ownerId") int ownerId) {
-        return propertyService.addPropertyToOwner(propertyId, ownerId);
-    }
+//    @PostMapping(value = "/{propertyId}/owners/{ownerId}")
+//    public boolean addPropertyToOwner(@PathVariable("propertyId") int propertyId, @PathVariable("ownerId") int ownerId) {
+//        return propertyService.addPropertyToOwner(propertyId, ownerId);
+//    }
 
     @GetMapping("/search")
     public List<PropertyDto> getPropertiesByPropertyIdOrOwnerVatNumber(@RequestParam(name = "propertyId", required = false) Integer propertyId, @RequestParam(name = "vatNumber", required = false) String vatNumber) {

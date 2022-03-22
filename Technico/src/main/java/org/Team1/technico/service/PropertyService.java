@@ -17,7 +17,7 @@ public interface PropertyService {
 
     boolean deleteProperty(int propertyId);
 
-    boolean addPropertyToOwner(int propertyId, int ownerId);
+    boolean addPropertyToOwner(Property property, int ownerId);
 
     List<PropertyDto> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber);
     List<Repair> getRepairsByPropertyId(Integer propertyId);

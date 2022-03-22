@@ -81,11 +81,11 @@ public class PropertyServiceImpl implements PropertyService {
 //    public List<PropertyDto> properties(int ownerId) {
 //        return null;
 //    }
-    public boolean addPropertyToOwner(int propertyId, int ownerId) {
+    public boolean addPropertyToOwner(Property property, int ownerId) {
         Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
-        Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
-        if (ownerOptional.isPresent() && propertyOptional.isPresent()) {
-            Property property = propertyOptional.get();
+
+        if (ownerOptional.isPresent() ) {
+
             property.setOwner(ownerOptional.get());
             property.setOwnerVatNumber(ownerOptional.get().getVatNumber());
             propertyRepository.save(property);
