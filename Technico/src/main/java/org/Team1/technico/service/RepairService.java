@@ -14,5 +14,4 @@ public interface RepairService {
     Repair updateRepair(int repairId, Repair repair);
     boolean deleteRepair(int repairId);
     boolean addRepairToProperty(int repairId, int propertyId);
-
 }

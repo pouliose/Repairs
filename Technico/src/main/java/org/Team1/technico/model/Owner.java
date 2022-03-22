@@ -29,8 +29,8 @@ public class Owner {
     @Column(unique=true)
     private String username;
     private String password;
-    @OneToMany(mappedBy = "owner")
-    private List<Property> properties;
+   /* @OneToMany(mappedBy = "owner")
+    private List<Property> properties;*/
     @OneToMany(mappedBy = "owner")
     private List<Repair> repairs;
 }

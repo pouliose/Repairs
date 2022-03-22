@@ -2,6 +2,7 @@ package org.Team1.technico.service;
 
 import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.model.Property;
+import org.Team1.technico.model.Repair;
 
 import java.util.List;
 
@@ -19,7 +20,6 @@ public interface PropertyService {
     boolean addPropertyToOwner(int propertyId, int ownerId);
 
     List<PropertyDto> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber);
-
-
+    List<Repair> getRepairsByPropertyId(Integer propertyId);
 }
 

@@ -92,7 +92,7 @@ public class RepairServiceImpl implements RepairService {
     public boolean addRepairToProperty(int repairId, int propertyId) {
         Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
         Optional<Repair> repairOptional = repairRepository.findById(repairId);
-        if (propertyOptional.isPresent() && repairOptional.isPresent()){
+        if (propertyOptional.isPresent() && repairOptional.isPresent()) {
             Repair repairToUpdate = repairOptional.get();
             Property propertyToAdd = propertyOptional.get();
             repairToUpdate.setProperty(propertyToAdd);
@@ -100,6 +100,5 @@ public class RepairServiceImpl implements RepairService {
             return true;
         }
         return false;
-
     }
 }

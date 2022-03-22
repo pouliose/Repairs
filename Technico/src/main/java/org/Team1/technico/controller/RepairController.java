@@ -44,5 +44,4 @@ public class RepairController {
         return service.addRepairToProperty(repairId, propertyId);
     }
 
-
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
+import org.Team1.technico.model.Repair;
 import org.Team1.technico.repository.OwnerRepository;
 import org.Team1.technico.repository.PropertyRepository;
 import org.Team1.technico.repository.RepairRepository;
@@ -101,6 +102,11 @@ public class PropertyServiceImpl implements PropertyService {
             return propertyDtos;
         }
         return null;
+    }
+
+    @Override
+    public List<Repair> getRepairsByPropertyId(Integer propertyId) {
+        return propertyRepository.getRepairsByPropertyId(propertyId);
     }
 }
 
