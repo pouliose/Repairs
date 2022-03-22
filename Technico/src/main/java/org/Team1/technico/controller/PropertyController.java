@@ -55,17 +55,17 @@ public class PropertyController {
 
 
     @GetMapping("/{propertyId}/repairs")
-    public List<RepairDto> getRepairsOfProperty(@PathVariable("propertyId") int propertyId) {
+    public List<Repair> getRepairsOfProperty(@PathVariable("propertyId") int propertyId) {
         List<Repair> repairs = propertyService.getRepairsByPropertyId(propertyId);
-        List<RepairDto> repairsDto = repairs.stream().
-                map(repair -> new RepairDto(repair.getId(),
-                        repair.getRegistrationDate(),
-                        repair.getCompletionDate(),
-                        repair.getRepairStatus(),
-                        repair.getRepairType(),
-                        repair.getCost(),
-                        repair.getDescription())).toList();
-        return repairsDto;
+//        List<RepairDto> repairsDto = repairs.stream().
+//                map(repair -> new RepairDto(repair.getId(),
+//                        repair.getRegistrationDate(),
+//                        repair.getCompletionDate(),
+//                        repair.getRepairStatus(),
+//                        repair.getRepairType(),
+//                        repair.getCost(),
+//                        repair.getDescription())).toList();
+        return repairs;
     }
 
     @PostMapping("/{propertyId}/repairs")

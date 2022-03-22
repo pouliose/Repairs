@@ -20,7 +20,7 @@ public class Repair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime registrationDate;
+    private LocalDate registrationDate;
     @JsonIgnore
     @ManyToOne
     private Property property;
