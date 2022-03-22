@@ -1,6 +1,7 @@
 package org.Team1.technico.controller;
 
 import lombok.AllArgsConstructor;
+import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.service.OwnerService;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,9 @@ public class OwnerController {
     }
 
     @GetMapping("")
-    public List<Owner> get() {
+    public List<Owner> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "email", required = false) String email) {
+        if (vatNumber != null && vatNumber != "" || email !="" && email != null)
+            return service.getOwnerByVatNumberOrEmail(vatNumber, email);
         return service.readOwner();
     }
 
@@ -38,6 +41,16 @@ public class OwnerController {
     public boolean delete(@PathVariable("ownerId") int ownerId) {
         return service.deleteOwner(ownerId);
     }
+
+    @GetMapping("/{ownerId}/properties")
+    public List<PropertyDto> getPropertiesOfOwner(@PathVariable("ownerId") int ownerId) {
+        return service.getPropertiesOfOwner(ownerId);
+    }
+
+    /*@PostMapping(value = "/{ownerId}/properties/{propertyId}")
+    public boolean addPropertyToOwner(@PathVariable("ownerId") int ownerId, @PathVariable("propertyId") int propertyId) {
+        return service.addPropertyToOwner(ownerId, propertyId);
+    }*/
 
 
 }

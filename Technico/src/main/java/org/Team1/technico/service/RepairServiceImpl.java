@@ -1,11 +1,15 @@
 package org.Team1.technico.service;
 
 import lombok.AllArgsConstructor;
+import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
+import org.Team1.technico.repository.OwnerRepository;
+import org.Team1.technico.repository.PropertyRepository;
 import org.Team1.technico.repository.RepairRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,21 +17,24 @@ import java.util.Optional;
 
 @Service
 public class RepairServiceImpl implements RepairService {
-    private RepairRepository repository;
+    private RepairRepository repairRepository;
+    private PropertyRepository propertyRepository;
+    private OwnerRepository ownerRepository;
 
     @Override
     public Repair createRepair(Repair repair) {
-        return repository.save(repair);
+        repair.setRegistrationDate(LocalDateTime.now());
+        return repairRepository.save(repair);
     }
 
     @Override
     public List<Repair> readRepair() {
-        return repository.findAll();
+        return repairRepository.findAll();
     }
 
     @Override
     public Repair readRepair(int repairId) {
-        Optional<Repair> repairDb = repository.findById(repairId);
+        Optional<Repair> repairDb = repairRepository.findById(repairId);
         if (repairDb.isEmpty())
             return null;
         return repairDb.get();
@@ -59,7 +66,7 @@ public class RepairServiceImpl implements RepairService {
                             match.setCost(repair.getCost());
                             match.setOwner(repair.getOwner());
                             match.setDescription(repair.getDescription());
-                            return repository.save(match);
+                            return repairRepository.save(match);
 
                         } catch (Exception e) {
                             e.getMessage();
@@ -77,7 +84,21 @@ public class RepairServiceImpl implements RepairService {
         Optional<Repair> repairDb = Optional.ofNullable(readRepair(repairId));
         if (repairDb.isEmpty())
             return false;
-        repository.delete(repairDb.get());
+        repairRepository.delete(repairDb.get());
         return true;
+    }
+
+    @Override
+    public boolean addRepairToProperty(int repairId, int propertyId) {
+        Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
+        Optional<Repair> repairOptional = repairRepository.findById(repairId);
+        if (propertyOptional.isPresent() && repairOptional.isPresent()) {
+            Repair repairToUpdate = repairOptional.get();
+            Property propertyToAdd = propertyOptional.get();
+            repairToUpdate.setProperty(propertyToAdd);
+            repairRepository.save(repairToUpdate);
+            return true;
+        }
+        return false;
     }
 }

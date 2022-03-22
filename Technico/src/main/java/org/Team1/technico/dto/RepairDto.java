@@ -1,35 +1,24 @@
-package org.Team1.technico.model;
+package org.Team1.technico.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.Team1.technico.model.RepairStatus;
+import org.Team1.technico.model.RepairType;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Repair {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class RepairDto {
     private int id;
     private LocalDateTime registrationDate;
-    @JsonIgnore
-    @ManyToOne
-    private Property property;
     private LocalDate completionDate;
     private RepairStatus repairStatus;
     private RepairType repairType;
     private BigDecimal cost;
-    @ManyToOne
-    private Owner owner;
     private String description;
-
 }

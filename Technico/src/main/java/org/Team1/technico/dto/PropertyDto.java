@@ -1,12 +1,16 @@
 package org.Team1.technico.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.Team1.technico.model.PropertyType;
-
-import java.time.Year;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class PropertyDto {
-    private int identityE9;
+    private int id;
+    private String identityE9;
     private String address;
-    private Year constructionYear;
+    private int constructionYear;
     private PropertyType propertyType;
 }
