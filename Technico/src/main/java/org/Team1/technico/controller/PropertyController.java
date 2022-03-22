@@ -67,4 +67,9 @@ public class PropertyController {
                         repair.getDescription())).toList();
         return repairsDto;
     }
+
+    @PostMapping("/{propertyId}/repairs")
+    public boolean addRepairOfProperty(@PathVariable("propertyId") int propertyId, @RequestBody Repair repair) {
+        return repairService.addRepairToProperty(repair, propertyId);
+    }
 }

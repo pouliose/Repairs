@@ -39,9 +39,6 @@ public class RepairController {
         return service.deleteRepair(repairId);
     }
 
-    @PostMapping(value = "/{repairId}/properties/{propertyId}")
-    public boolean addPropertyToOwner(@PathVariable("repairId") int repairId, @PathVariable("propertyId") int propertyId) {
-        return service.addRepairToProperty(repairId, propertyId);
-    }
+
 
 }

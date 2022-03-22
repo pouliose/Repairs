@@ -89,14 +89,15 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public boolean addRepairToProperty(int repairId, int propertyId) {
+    public boolean addRepairToProperty(Repair repair, int propertyId) {
         Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
-        Optional<Repair> repairOptional = repairRepository.findById(repairId);
-        if (propertyOptional.isPresent() && repairOptional.isPresent()) {
-            Repair repairToUpdate = repairOptional.get();
-            Property propertyToAdd = propertyOptional.get();
-            repairToUpdate.setProperty(propertyToAdd);
-            repairRepository.save(repairToUpdate);
+
+        if (propertyOptional.isPresent() ) {
+            repair.setRegistrationDate(LocalDateTime.now());
+            repair.setOwner(propertyOptional.get().getOwner());
+            repair.setProperty(propertyOptional.get());
+
+            repairRepository.save(repair);
             return true;
         }
         return false;
