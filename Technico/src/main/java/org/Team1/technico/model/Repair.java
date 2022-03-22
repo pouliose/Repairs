@@ -28,6 +28,7 @@ public class Repair {
     private RepairStatus repairStatus;
     private RepairType repairType;
     private BigDecimal cost;
+    @JsonIgnore
     @ManyToOne
     private Owner owner;
     private String description;

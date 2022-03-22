@@ -28,6 +28,7 @@ public class Property {
     @JsonIgnore
     @ManyToOne
     private Owner owner;
+    @JsonIgnore
     @OneToMany(mappedBy = "property")
     private List<Repair> repairs;
 
