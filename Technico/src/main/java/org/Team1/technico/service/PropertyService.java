@@ -19,7 +19,7 @@ public interface PropertyService {
 
     boolean addPropertyToOwner(Property property, int ownerId);
 
-    List<PropertyDto> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber);
+    List<Property> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber);
     List<Repair> getRepairsByPropertyId(Integer propertyId);
 }
 

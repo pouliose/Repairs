@@ -70,8 +70,8 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public boolean deleteProperty(int propertyId) {
-        Optional<Property> propertyDb = Optional.ofNullable(readProperty(propertyId));
-        if (propertyDb.isEmpty())
+        Optional<Property> propertyDb = propertyRepository.findById(propertyId);
+        if (propertyDb.isEmpty()  || ! propertyDb.get().getRepairs().isEmpty() )
             return false;
         propertyRepository.delete(propertyDb.get());
         return true;
@@ -95,11 +95,11 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public List<PropertyDto> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber) {
+    public List<Property> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber) {
         if (propertyId != null || ownerVatNumber != null){
             List<Property> properties =  propertyRepository.findPropertyByIdOrOwnerVatNumber(propertyId, ownerVatNumber);
-            List<PropertyDto> propertyDtos = properties.stream().map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
-            return propertyDtos;
+            //List<PropertyDto> propertyDtos = properties.stream().map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
+            return properties;
         }
         return null;
     }
