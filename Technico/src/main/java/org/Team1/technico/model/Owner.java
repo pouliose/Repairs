@@ -1,6 +1,7 @@
 package org.Team1.technico.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,9 @@ public class Owner {
     @Column(unique=true)
     private String username;
     private String password;
-   /* @OneToMany(mappedBy = "owner")
-    private List<Property> properties;*/
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
-    private List<Repair> repairs;
+    private List<Property> properties;
+
+
 }

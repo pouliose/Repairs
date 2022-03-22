@@ -87,7 +87,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public boolean deleteOwner(int ownerId) {
         Optional<Owner> ownerDb = ownerRepository.findById(ownerId);
-        if (ownerDb.isEmpty())
+        if (ownerDb.isEmpty() || ! ownerDb.get().getProperties().isEmpty())
             return false;
         ownerRepository.delete(ownerDb.get());
         return true;
