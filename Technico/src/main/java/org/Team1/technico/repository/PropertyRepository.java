@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
-    List<Property> findPropertyByIdOrOwnerVatNumber(Integer propertyId, String varNumber);
+    List<Property> findPropertyByIdOrOwnerVatNumber(Integer propertyId, String vatNumber);
     List<Property> findPropertyByOwnerId(int ownerId);
 
     @Query(value ="Select p.repairs from Property p where p.id = : propertyId")
