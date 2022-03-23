@@ -2,6 +2,7 @@ package org.Team1.technico.controller;
 
 
 import lombok.AllArgsConstructor;
+import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
 import org.Team1.technico.service.PropertyService;
@@ -68,7 +69,7 @@ public class PropertyController {
     }
 
     @PostMapping("/{propertyId}/repairs")
-    public boolean addRepairOfProperty(@PathVariable("propertyId") int propertyId, @RequestBody Repair repair) {
+    public ResponseResult<Boolean> addRepairOfProperty(@PathVariable("propertyId") int propertyId, @RequestBody Repair repair) {
         return repairService.addRepairToProperty(repair, propertyId);
     }
 }

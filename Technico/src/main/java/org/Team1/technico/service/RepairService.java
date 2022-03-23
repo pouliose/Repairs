@@ -7,18 +7,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface RepairService {
-    Repair createRepair(Repair repair);
-    List<Repair> readRepair();
-    Repair readRepair(int repairId);
-    List<Repair> searchRepair(int ownerId);
-    List<Repair> searchRepair(LocalDate firstDateInRange, LocalDate lastDateInRange);
-    Repair updateRepair(int repairId, Repair repair);
-    boolean deleteRepair(int repairId);
-    boolean addRepairToProperty(Repair repair, int propertyId);
 
-    ResponseResult<Integer> createRepairToProperty(int propertyId);
+    ResponseResult<List<Repair>> readRepair();
+    ResponseResult<Repair> readRepair(int repairId);
 
-    List<Repair> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd);
-    List<Repair> getByOwner_Id(Integer id);
+    ResponseResult<Repair> updateRepair(int repairId, Repair repair);
+    ResponseResult<Boolean> deleteRepair(int repairId);
+    ResponseResult<Boolean> addRepairToProperty(Repair repair, int propertyId);
+
+
+
+    ResponseResult<List<Repair>> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd);
+    ResponseResult<List<Repair>> getByOwner_Id(Integer id);
 
 }
