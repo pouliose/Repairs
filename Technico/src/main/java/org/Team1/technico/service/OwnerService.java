@@ -2,6 +2,7 @@ package org.Team1.technico.service;
 
 import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.model.Owner;
+import org.Team1.technico.model.Property;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface OwnerService {
     List<Owner> getOwnerByVatNumberOrEmail(String vatNumber, String email);
     Owner updateOwner(int ownerId, Owner owner);
     boolean deleteOwner(int ownerId);
-    List<PropertyDto> getPropertiesOfOwner(int ownerId);
+    List<Property> getPropertiesOfOwner(int ownerId);
 }
