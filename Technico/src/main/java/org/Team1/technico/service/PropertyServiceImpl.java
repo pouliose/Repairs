@@ -2,10 +2,7 @@ package org.Team1.technico.service;
 
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.Team1.technico.dto.PropertyDto;
-import org.Team1.technico.dto.ResponseResult;
-import org.Team1.technico.dto.ResponseStatus;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
@@ -19,7 +16,6 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-@Slf4j
 
 public class PropertyServiceImpl implements PropertyService {
 
@@ -75,83 +71,42 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public boolean deleteProperty(int propertyId) {
         Optional<Property> propertyDb = propertyRepository.findById(propertyId);
-        if (propertyDb.isEmpty() || !propertyDb.get().getRepairs().isEmpty())
+        if (propertyDb.isEmpty()  || ! propertyDb.get().getRepairs().isEmpty() )
             return false;
         propertyRepository.delete(propertyDb.get());
         return true;
     }
 
-//    @Override
-//    public boolean addPropertyToOwner(Property property, int ownerId) {
-//        return false;
+    //    @Override
+//    public List<PropertyDto> properties(int ownerId) {
+//        return null;
 //    }
-
-    @Override
-    public  ResponseResult<Boolean> addPropertyToOwner(Property property, int ownerId) {
+    public boolean addPropertyToOwner(Property property, int ownerId) {
         Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
-        log.debug("Create property method ", ownerId);
 
-        if (ownerOptional.isPresent()) {
-
-            log.debug("Create property method ", ResponseStatus.SUCCESS);
+        if (ownerOptional.isPresent() ) {
 
             property.setOwner(ownerOptional.get());
             property.setOwnerVatNumber(ownerOptional.get().getVatNumber());
-            try {
-                propertyRepository.save(property);
-            } catch (Exception e) {
-                log.debug("Create property method ", ResponseStatus.PROPERTY_NOT_CREATED);
-                return new ResponseResult<Boolean>(false, ResponseStatus.PROPERTY_NOT_CREATED, "The property has NOT been saved");
-            }
-            return new ResponseResult<Boolean>(true,
-                    ResponseStatus.SUCCESS, "The property has been created successfully");
+            propertyRepository.save(property);
+            return true;
         }
-        log.debug("Create property method ", ResponseStatus.OWNER_NOT_FOUND);
-        return new ResponseResult<Boolean>(false, ResponseStatus.OWNER_NOT_FOUND, "The owner cannot be found");
-
+        return false;
     }
 
     @Override
-    public List<Property> getByOwnerVatNumberOrIdentityE9(String ownerVatNumber, String identityE9) {
-        if (identityE9 != null || ownerVatNumber != null) {
-            List<Property> properties = propertyRepository.findByOwnerVatNumberOrIdentityE9(ownerVatNumber, identityE9);
-
+    public List<Property> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber) {
+        if (propertyId != null || ownerVatNumber != null){
+            List<Property> properties =  propertyRepository.findPropertyByIdOrOwnerVatNumber(propertyId, ownerVatNumber);
+            //List<PropertyDto> propertyDtos = properties.stream().map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
             return properties;
         }
         return null;
-
     }
-
-//    @Override
-//    public List<Property> getByOwnerVatNumberOrIdentityE9(Integer propertyId, String ownerVatNumber) {
-//        if (propertyId != null || ownerVatNumber != null) {
-//            List<Property> properties = propertyRepository.findPropertyByIdOrOwnerVatNumber(propertyId, ownerVatNumber);
-//
-//            return properties;
-//        }
-//    }
 
     @Override
     public List<Repair> getRepairsByPropertyId(Integer propertyId) {
         return propertyRepository.getRepairsByPropertyId(propertyId);
     }
-
-    @Override
-    public ResponseResult<List<PropertyDto>> ownerPropertyRepairs(int ownerId) {
-        Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
-        if (ownerOptional.isEmpty()) {
-
-            log.debug("Create basket method ", ResponseStatus.OWNER_NOT_FOUND);
-            return new ResponseResult<>(null,
-                    ResponseStatus.OWNER_NOT_FOUND, "The customer cannot be found");
-        }
-        List<Property> properties = propertyRepository.findPropertyByOwnerId(ownerId);
-
-        List<PropertyDto> propertyDtoList = properties
-                .stream()
-                .map(property -> new PropertyDto().addList()).toList();
-        return new ResponseResult<>(propertyDtoList, ResponseStatus.SUCCESS, "All OK");
-
-    }
-
 }
+

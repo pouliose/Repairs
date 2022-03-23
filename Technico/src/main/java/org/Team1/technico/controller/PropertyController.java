@@ -2,6 +2,7 @@ package org.Team1.technico.controller;
 
 
 import lombok.AllArgsConstructor;
+import org.Team1.technico.dto.RepairDto;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
 import org.Team1.technico.service.PropertyService;
@@ -20,14 +21,14 @@ public class PropertyController {
     private RepairService repairService;
 
 
-//    @PostMapping(value = "")
-//    public Property create(@RequestBody Property property) {
-//        return propertyService.createProperty(property);
-//    }
+    @PostMapping(value = "")
+    public Property create(@RequestBody Property property) {
+        return propertyService.createProperty(property);
+    }
 
 
     @GetMapping(value = "")
-    public List<Property> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "identityE9", required = false) String identityE9) {
+    public List<Property> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "propertyId", required = false) Integer propertyId) {
 
         if ( (identityE9!=null  && !identityE9.isBlank()) || (vatNumber != null && vatNumber != ""))
             return propertyService.getByOwnerVatNumberOrIdentityE9(vatNumber, identityE9);
