@@ -1,0 +1,701 @@
+{
+	"info": {
+		"_postman_id": "7fcfcb61-e5c9-4c08-91f0-77901f43a2b2",
+		"name": "TechnicoTeam1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OwnerEndpoints",
+			"item": [
+				{
+					"name": "Update owner",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vatNumber\": \"111222333\",\r\n    \"firstName\" : \"Nickolaos\",\r\n    \"lastName\" : \"Kevin\",\r\n    \"address\" : \"Papagou 199\",\r\n    \"phoneNumber\" : \"2105009000\",\r\n    \"email\" : \"nickos@mail.com\",\r\n    \"username\" : \"nickusername\",\r\n    \"password\" : \"password1$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create owner1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vatNumber\": \"111222333\",\r\n    \"firstName\" : \"Nick\",\r\n    \"lastName\" : \"Kevin\",\r\n    \"address\" : \"Papagou 50\",\r\n    \"phoneNumber\" : \"2105009000\",\r\n    \"email\" : \"nick@mail.com\",\r\n    \"username\" : \"nickusername\",\r\n    \"password\" : \"password1$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create owner2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vatNumber\": 111222444,\r\n    \"firstName\" : \"Kate\",\r\n    \"lastName\" : \"Kevin\",\r\n    \"address\" : \"Papagou 50\",\r\n    \"phoneNumber\" : 2105009000,\r\n    \"email\" : \"kate@mail.com\",\r\n    \"username\" : \"kateusername\",\r\n    \"password\" : \"password1$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get owner",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get properties for owner",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners/1/properties",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners",
+								"1",
+								"properties"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get owner (search params: vatNumber, email)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners?vatNumber=111222333&email=anna@mail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners"
+							],
+							"query": [
+								{
+									"key": "vatNumber",
+									"value": "111222333"
+								},
+								{
+									"key": "email",
+									"value": "anna@mail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create property for owner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"identityE9\":\"111222444\",\"address\":\"Karamanli 10\",\"constructionYear\":1950,\"propertyType\": 2}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners/1/properties",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners",
+								"1",
+								"properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete owner",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get properties of owner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/owners/1/properties/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners",
+								"1",
+								"properties",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PropertyEndpoints",
+			"item": [
+				{
+					"name": "Update property",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identityE9\": \"111222444\",\r\n    \"address\": \"Karamanli 10\",\r\n    \"constructionYear\": 1990,\r\n    \"propertyType\": \"FLAT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create property1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"identityE9\":\"111222444\",\"address\":\"Karamanli 10\",\"constructionYear\":1950,\"propertyType\": 2}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create property2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identityE9\": 111222333,\r\n    \"address\" : \"Diakou 10\",\r\n    \"constructionYear\" : 1990,\r\n    \"propertyType\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create property3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identityE9\": \"000005000\",\r\n    \"address\" : \"Frantzh 10\",\r\n    \"constructionYear\" : 2022,\r\n    \"propertyType\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get property",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get properties (search params: id, ownerVatNumber)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties/search?identityE9=123567892&vatNumber=150250352",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties",
+								"search"
+							],
+							"query": [
+								{
+									"key": "identityE9",
+									"value": "123567892"
+								},
+								{
+									"key": "vatNumber",
+									"value": "150250352"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get repairs by propertyId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties/1/repairs",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties",
+								"1",
+								"repairs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set repair to property",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"completionDate\": \"2024-01-25\",\r\n    \"repairStatus\" : 2,\r\n    \"repairType\" : 1,\r\n    \"cost\" : 1000.100,\r\n    \"description\" : \"description!£$\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/repairs/1/properties/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"repairs",
+								"1",
+								"properties",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete property",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/owners/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"owners",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RepairEndpoints",
+			"item": [
+				{
+					"name": "Update repair",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"completionDate\": \"2024-01-25\",\r\n    \"repairStatus\" : 2,\r\n    \"repairType\" : 1,\r\n    \"cost\" : 100.0,\r\n    \"description\" : \"description!£$\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/repairs/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"repairs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get repair",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/repairs/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"repairs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get repairs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/repairs?startDate=2022-01-01&endDate=2022-02-02&ownerId=4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"repairs"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2022-01-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2022-02-02"
+								},
+								{
+									"key": "ownerId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete repair",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/repairs/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"repairs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
