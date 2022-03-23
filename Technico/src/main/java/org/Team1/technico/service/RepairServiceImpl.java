@@ -23,7 +23,7 @@ public class RepairServiceImpl implements RepairService {
 
     @Override
     public Repair createRepair(Repair repair) {
-        repair.setRegistrationDate(LocalDateTime.now());
+        repair.setRegistrationDate(LocalDate.now());
         return repairRepository.save(repair);
     }
 
@@ -89,16 +89,28 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public boolean addRepairToProperty(int repairId, int propertyId) {
+    public boolean addRepairToProperty(Repair repair, int propertyId) {
         Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
-        Optional<Repair> repairOptional = repairRepository.findById(repairId);
-        if (propertyOptional.isPresent() && repairOptional.isPresent()) {
-            Repair repairToUpdate = repairOptional.get();
-            Property propertyToAdd = propertyOptional.get();
-            repairToUpdate.setProperty(propertyToAdd);
-            repairRepository.save(repairToUpdate);
+
+        if (propertyOptional.isPresent() ) {
+            repair.setRegistrationDate(LocalDate.now());
+            repair.setOwner(propertyOptional.get().getOwner());
+            repair.setProperty(propertyOptional.get());
+
+            repairRepository.save(repair);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Repair> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd) {
+
+        return repairRepository.findByRegistrationDateIsBetween(registrationDateStart,registrationDateEnd);
+    }
+
+    @Override
+    public List<Repair> getByOwner_Id(Integer id) {
+        return repairRepository.findByOwner_Id(id);
     }
 }

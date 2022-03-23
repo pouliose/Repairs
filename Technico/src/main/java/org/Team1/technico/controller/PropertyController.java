@@ -2,7 +2,6 @@ package org.Team1.technico.controller;
 
 
 import lombok.AllArgsConstructor;
-import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.dto.RepairDto;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
@@ -29,7 +28,12 @@ public class PropertyController {
 
 
     @GetMapping(value = "")
-    public List<Property> getAllProperties() {
+    public List<Property> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "propertyId", required = false) Integer propertyId) {
+
+        if (propertyId != null || vatNumber != null && vatNumber != "")
+            return propertyService.getPropertiesByPropertyIdOrOwnerVatNumber(propertyId, vatNumber);
+
+
         return propertyService.readProperty();
     }
 
@@ -48,29 +52,24 @@ public class PropertyController {
         return propertyService.deleteProperty(propertyId);
     }
 
-    @PostMapping(value = "/{propertyId}/owners/{ownerId}")
-    public boolean addPropertyToOwner(@PathVariable("propertyId") int propertyId, @PathVariable("ownerId") int ownerId) {
-        return propertyService.addPropertyToOwner(propertyId, ownerId);
-    }
 
-    @GetMapping("/search")
-    public List<PropertyDto> getPropertiesByPropertyIdOrOwnerVatNumber(@RequestParam(name = "propertyId", required = false) Integer propertyId, @RequestParam(name = "vatNumber", required = false) String vatNumber) {
-        if (propertyId != null || vatNumber != null && vatNumber != "")
-            return propertyService.getPropertiesByPropertyIdOrOwnerVatNumber(propertyId, vatNumber);
-        return null;
-    }
 
     @GetMapping("/{propertyId}/repairs")
-    public List<RepairDto> getRepairsOfProperty(@PathVariable("propertyId") int propertyId) {
+    public List<Repair> getRepairsOfProperty(@PathVariable("propertyId") int propertyId) {
         List<Repair> repairs = propertyService.getRepairsByPropertyId(propertyId);
-        List<RepairDto> repairsDto = repairs.stream().
-                map(repair -> new RepairDto(repair.getId(),
-                        repair.getRegistrationDate(),
-                        repair.getCompletionDate(),
-                        repair.getRepairStatus(),
-                        repair.getRepairType(),
-                        repair.getCost(),
-                        repair.getDescription())).toList();
-        return repairsDto;
+//        List<RepairDto> repairsDto = repairs.stream().
+//                map(repair -> new RepairDto(repair.getId(),
+//                        repair.getRegistrationDate(),
+//                        repair.getCompletionDate(),
+//                        repair.getRepairStatus(),
+//                        repair.getRepairType(),
+//                        repair.getCost(),
+//                        repair.getDescription())).toList();
+        return repairs;
+    }
+
+    @PostMapping("/{propertyId}/repairs")
+    public boolean addRepairOfProperty(@PathVariable("propertyId") int propertyId, @RequestBody Repair repair) {
+        return repairService.addRepairToProperty(repair, propertyId);
     }
 }
