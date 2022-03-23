@@ -108,4 +108,9 @@ public class RepairServiceImpl implements RepairService {
 
         return repairRepository.findByRegistrationDateIsBetween(registrationDateStart,registrationDateEnd);
     }
+
+    @Override
+    public List<Repair> getByOwner_Id(Integer id) {
+        return repairRepository.findByOwner_Id(id);
+    }
 }

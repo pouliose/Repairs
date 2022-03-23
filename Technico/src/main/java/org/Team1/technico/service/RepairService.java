@@ -15,4 +15,5 @@ public interface RepairService {
     boolean deleteRepair(int repairId);
     boolean addRepairToProperty(Repair repair, int propertyId);
     List<Repair> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd);
+    List<Repair> getByOwner_Id(Integer id);
 }

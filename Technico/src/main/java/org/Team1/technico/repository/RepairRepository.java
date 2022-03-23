@@ -14,4 +14,8 @@ public interface RepairRepository extends JpaRepository<Repair, Integer> {
     List<Repair> findByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd);
 
 
+
+    List<Repair> findByOwner_Id(Integer id);
+
+
 }

@@ -21,12 +21,16 @@ public class RepairController {
     }
 
     @GetMapping("")
-    public List<Repair> get(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate) {
+    public List<Repair> get(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam( name = "ownerId",required = false) Integer ownerID) {
         if( startDate != null && endDate != null) {
             LocalDate registrationDateStart = LocalDate.parse(startDate);
             LocalDate registrationDateEnd = LocalDate.parse(endDate);
 
-            return service.getByRegistrationDateIsBetween(registrationDateStart, registrationDateEnd);
+             return service.getByRegistrationDateIsBetween(registrationDateStart, registrationDateEnd);
+        }
+        else if ( ownerID != null) {
+
+            return service.getByOwner_Id(ownerID);
         }
         return service.readRepair();
     }
