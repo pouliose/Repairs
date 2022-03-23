@@ -1,5 +1,6 @@
 package org.Team1.technico.service;
 
+import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.model.Repair;
 
 import java.time.LocalDate;
@@ -14,6 +15,10 @@ public interface RepairService {
     Repair updateRepair(int repairId, Repair repair);
     boolean deleteRepair(int repairId);
     boolean addRepairToProperty(Repair repair, int propertyId);
+
+    ResponseResult<Integer> createRepairToProperty(int propertyId);
+
     List<Repair> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd);
     List<Repair> getByOwner_Id(Integer id);
+
 }
