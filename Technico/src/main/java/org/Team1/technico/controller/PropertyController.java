@@ -30,8 +30,8 @@ public class PropertyController {
     @GetMapping(value = "")
     public List<Property> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "propertyId", required = false) Integer propertyId) {
 
-        if ( (identityE9!=null  && !identityE9.isBlank()) || (vatNumber != null && vatNumber != ""))
-            return propertyService.getByOwnerVatNumberOrIdentityE9(vatNumber, identityE9);
+        if (propertyId != null || vatNumber != null && vatNumber != "")
+            return propertyService.getPropertiesByPropertyIdOrOwnerVatNumber(propertyId, vatNumber);
 
 
         return propertyService.readProperty();
