@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -20,15 +22,21 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique=true)
+    @NotBlank(message = "VAT number is mandatory field.")
+    @Size(min = 9, max = 9)
     private String vatNumber;
+    @NotBlank(message = "First name is mandatory field.")
     private String firstName;
+    @NotBlank(message = "Last name is mandatory field.")
     private String lastName;
     private String address;
     private String phoneNumber;
     @Column(unique=true)
     private String email;
     @Column(unique=true)
+    @NotBlank(message = "Username is mandatory field.")
     private String username;
+    @NotBlank(message = "Password is mandatory field.")
     private String password;
     @JsonIgnore
     @OneToMany(mappedBy = "owner")

@@ -1,6 +1,5 @@
 package org.Team1.technico.service;
 
-import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
 

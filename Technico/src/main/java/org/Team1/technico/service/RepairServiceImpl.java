@@ -6,7 +6,6 @@ import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.dto.ResponseStatus;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
-import org.Team1.technico.repository.OwnerRepository;
 import org.Team1.technico.repository.PropertyRepository;
 import org.Team1.technico.repository.RepairRepository;
 import org.springframework.stereotype.Service;

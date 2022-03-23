@@ -1,7 +1,6 @@
 package org.Team1.technico.controller;
 
 import lombok.AllArgsConstructor;
-import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
@@ -55,6 +54,4 @@ public class OwnerController {
     public ResponseResult<Boolean> addPropertyToOwner(@PathVariable("ownerId") int ownerId, @RequestBody Property property) {
         return propertyService.addPropertyToOwner(property, ownerId);
     }
-
-
 }

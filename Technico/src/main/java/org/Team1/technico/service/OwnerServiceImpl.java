@@ -2,7 +2,6 @@ package org.Team1.technico.service;
 
 import lombok.AllArgsConstructor;
 import org.Team1.technico.TechnicoMain;
-import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.exceptions.EmailException;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
@@ -100,15 +99,7 @@ public class OwnerServiceImpl implements OwnerService {
             return null;
 
         return ownerOptional.get().getProperties();
-
-//        List<PropertyDto> propertiesDto = propertyRepository.findAll()
-//                .stream()
-//                .filter(property -> property.getOwner().getId() == ownerId)
-//                .map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
-//        return propertiesDto;
-//        List<Property> properties = propertyRepository.findPropertyByOwnerId(ownerId);
-//        List<PropertyDto> propertiesDto = properties.stream().map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
-    }
+ }
 
     public boolean validateEmail(String email) {
         try {
@@ -123,22 +114,4 @@ public class OwnerServiceImpl implements OwnerService {
         }
         return false;
     }
-
-    /*@Override
-    public boolean addPropertyToOwner(int ownerId, int propertyId) {
-        Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
-        Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
-        Owner ownerToBeUpdated = new Owner();
-        if (ownerOptional.isPresent() && propertyOptional.isPresent()){
-            ownerToBeUpdated = ownerOptional.get();
-            List<Property> properties = new ArrayList<>();
-            properties = ownerToBeUpdated.getProperties();
-            Property propertyToAdd = propertyOptional.get();
-            properties.add(propertyToAdd);
-            ownerToBeUpdated.setProperties(properties);
-            ownerRepository.save(ownerToBeUpdated);
-            return true;
-        }
-        return false;
-    }*/
 }
