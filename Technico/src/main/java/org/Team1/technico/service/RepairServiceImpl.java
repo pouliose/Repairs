@@ -9,7 +9,6 @@ import org.Team1.technico.repository.RepairRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +63,6 @@ public class RepairServiceImpl implements RepairService {
                             match.setRepairStatus(repair.getRepairStatus());
                             match.setRepairType(repair.getRepairType());
                             match.setCost(repair.getCost());
-                            match.setOwner(repair.getOwner());
                             match.setDescription(repair.getDescription());
                             return repairRepository.save(match);
 
@@ -92,9 +90,8 @@ public class RepairServiceImpl implements RepairService {
     public boolean addRepairToProperty(Repair repair, int propertyId) {
         Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
 
-        if (propertyOptional.isPresent() ) {
+        if (propertyOptional.isPresent()) {
             repair.setRegistrationDate(LocalDate.now());
-            repair.setOwner(propertyOptional.get().getOwner());
             repair.setProperty(propertyOptional.get());
 
             repairRepository.save(repair);
@@ -106,11 +103,11 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public List<Repair> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd) {
 
-        return repairRepository.findByRegistrationDateIsBetween(registrationDateStart,registrationDateEnd);
+        return repairRepository.findByRegistrationDateIsBetween(registrationDateStart, registrationDateEnd);
     }
 
     @Override
     public List<Repair> getByOwner_Id(Integer id) {
-        return repairRepository.findByOwner_Id(id);
+        return repairRepository.findByProperty_Owner_Id(id);
     }
 }
