@@ -94,18 +94,20 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<PropertyDto> getPropertiesOfOwner(int ownerId) {
-        /*Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
+    public List<Property> getPropertiesOfOwner(int ownerId) {
+        Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
         if (ownerOptional.isEmpty())
             return null;
-        List<PropertyDto> propertiesDto = propertyRepository.findAll()
-                .stream()
-                .filter(property -> property.getOwner().getId() == ownerId)
-                .map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
-        return propertiesDto;*/
-        List<Property> properties = propertyRepository.findPropertyByOwnerId(ownerId);
-        List<PropertyDto> propertiesDto = properties.stream().map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
-        return propertiesDto;
+
+        return ownerOptional.get().getProperties();
+
+//        List<PropertyDto> propertiesDto = propertyRepository.findAll()
+//                .stream()
+//                .filter(property -> property.getOwner().getId() == ownerId)
+//                .map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
+//        return propertiesDto;
+//        List<Property> properties = propertyRepository.findPropertyByOwnerId(ownerId);
+//        List<PropertyDto> propertiesDto = properties.stream().map(property -> new PropertyDto(property.getId(), property.getIdentityE9(), property.getAddress(), property.getConstructionYear(), property.getPropertyType())).toList();
     }
 
     public boolean validateEmail(String email) {
