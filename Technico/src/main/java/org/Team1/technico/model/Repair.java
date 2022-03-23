@@ -29,4 +29,12 @@ public class Repair {
     private BigDecimal cost;
     private String description;
 
+    public Repair(LocalDate registrationDate, LocalDate completionDate, RepairStatus repairStatus, RepairType repairType, BigDecimal cost, String description) {
+        this.registrationDate = registrationDate;
+        this.completionDate = completionDate;
+        this.repairStatus = repairStatus;
+        this.repairType = repairType;
+        this.cost = cost;
+        this.description = description;
+    }
 }
