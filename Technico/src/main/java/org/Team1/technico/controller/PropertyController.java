@@ -29,7 +29,7 @@ public class PropertyController {
     @GetMapping(value = "")
     public List<Property> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "identityE9", required = false) String identityE9) {
 
-        if ( !(identityE9.isBlank() || identityE9.equals(null) )|| vatNumber != null && vatNumber != "")
+        if ( (identityE9!=null  && !identityE9.isBlank()) || (vatNumber != null && vatNumber != ""))
             return propertyService.getByOwnerVatNumberOrIdentityE9(vatNumber, identityE9);
 
 

@@ -7,7 +7,6 @@ import org.Team1.technico.repository.PropertyRepository;
 import org.Team1.technico.repository.RepairRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -17,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @AllArgsConstructor
 @Configuration
@@ -36,7 +34,7 @@ public class PopulateDataToDb {
         ownerRepository.saveAll(generateOwners());
         log.info("Owners saved!");
         propertyRepository.saveAll(generateProperties());
-        propertyRepository.saveAll(matchProperyOwners(propertyRepository.findAll(), ownerRepository.findAll()));
+        propertyRepository.saveAll(matchPropertyOwners(propertyRepository.findAll(), ownerRepository.findAll()));
         log.info("Properties saved!");
         repairRepository.saveAll(generateRepairs());
         repairRepository.saveAll(matchProperyRepairs(propertyRepository.findAll(), repairRepository.findAll()));
@@ -68,12 +66,16 @@ public class PopulateDataToDb {
 
     private static List<Repair> generateRepairs() {
         List<Repair> repairs = new ArrayList<>();
-        LocalDateTime datetime1 = LocalDateTime.now();
-        Repair repair1 = new Repair(datetime1, LocalDate.of(2023, 1, 13), RepairStatus.IN_PROGRESS, RepairType.PAINTING, new BigDecimal(770), "A paint description.");
-        Repair repair2 = new Repair(datetime1, LocalDate.of(2024, 2, 19), RepairStatus.PENDING, RepairType.INSULATION, new BigDecimal(15000.0), "An insulation description.");
-        Repair repair3 = new Repair(datetime1, LocalDate.of(2022, 05, 8), RepairStatus.IN_PROGRESS, RepairType.ELECTRICAL, new BigDecimal(5000.0), "An electrical description.");
-        Repair repair4 = new Repair(datetime1, LocalDate.of(2023, 2, 19), RepairStatus.PENDING, RepairType.INSULATION, new BigDecimal(19000.0), "An insulation description.");
-        Repair repair5 = new Repair(datetime1, LocalDate.of(2022, 05, 28), RepairStatus.IN_PROGRESS, RepairType.ELECTRICAL, new BigDecimal(5000.0), "An electrical description.");
+        LocalDate datetime1 = LocalDate.now().minusYears(1L);
+        LocalDate datetime2 = LocalDate.now().minusMonths(4L);
+        LocalDate datetime3 = LocalDate.now().minusMonths(2L);
+        LocalDate datetime4 = LocalDate.now().minusMonths(10L);
+        LocalDate datetime5 = LocalDate.now().minusDays(45L);
+        Repair repair1 = new Repair(datetime1, LocalDate.of(2023, 1, 13), RepairStatus.IN_PROGRESS, RepairType.PAINTING, BigDecimal.valueOf(770L), "A paint description.");
+        Repair repair2 = new Repair(datetime2, LocalDate.of(2024, 2, 19), RepairStatus.PENDING, RepairType.INSULATION, BigDecimal.valueOf(15000L), "An insulation description.");
+        Repair repair3 = new Repair(datetime3, LocalDate.of(2022, 05, 8), RepairStatus.IN_PROGRESS, RepairType.ELECTRICAL, BigDecimal.valueOf(5000L), "An electrical description.");
+        Repair repair4 = new Repair(datetime4, LocalDate.of(2023, 2, 19), RepairStatus.PENDING, RepairType.INSULATION, BigDecimal.valueOf(19000L), "An insulation description.");
+        Repair repair5 = new Repair(datetime5, LocalDate.of(2022, 05, 28), RepairStatus.IN_PROGRESS, RepairType.ELECTRICAL, BigDecimal.valueOf(5000L), "An electrical description.");
         repairs.add(repair1);
         repairs.add(repair2);
         repairs.add(repair3);
@@ -82,9 +84,11 @@ public class PopulateDataToDb {
         return repairs;
     }
 
-    private static List<Property> matchProperyOwners(List<Property> properties, List<Owner> owners) {
+    private static List<Property> matchPropertyOwners(List<Property> properties, List<Owner> owners) {
         for (Property property : properties) {
-            property.setOwner(owners.get((int) (Math.random() * owners.size())));
+            Owner ownerRandom = owners.get((int) (Math.random() * owners.size()));
+            property.setOwner(ownerRandom);
+            property.setOwnerVatNumber(ownerRandom.getVatNumber());
         }
         log.info("Properties and owners were matched!");
         return properties;
