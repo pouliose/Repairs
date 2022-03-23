@@ -34,5 +34,14 @@ public class Owner {
     @OneToMany(mappedBy = "owner")
     private List<Property> properties;
 
-
+    public Owner(String vatNumber, String firstName, String lastName, String address, String phoneNumber, String email, String username, String password) {
+        this.vatNumber = vatNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 }
