@@ -18,11 +18,13 @@ public interface PropertyService {
 
     boolean deleteProperty(int propertyId);
 
-    boolean addPropertyToOwner(Property property, int ownerId);
+    ResponseResult<Boolean> addPropertyToOwner(Property property, int ownerId);
 
-    ResponseResult<Integer> addPropertyToOwner(int ownerId);
+//    ResponseResult<Integer> addPropertyToOwner(int ownerId);
 
-    List<Property> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber);
+//    List<Property> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber);
+    List<Property> getByOwnerVatNumberOrIdentityE9(String ownerVatNumber, String identityE9);
+
     List<Repair> getRepairsByPropertyId(Integer propertyId);
 
     ResponseResult<List<PropertyDto>> ownerPropertyRepairs(int customerId);

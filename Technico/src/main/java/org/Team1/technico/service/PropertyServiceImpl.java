@@ -81,45 +81,55 @@ public class PropertyServiceImpl implements PropertyService {
         return true;
     }
 
-    @Override
-    public boolean addPropertyToOwner(Property property, int ownerId) {
-        return false;
-    }
+//    @Override
+//    public boolean addPropertyToOwner(Property property, int ownerId) {
+//        return false;
+//    }
 
     @Override
-    public ResponseResult<Integer> addPropertyToOwner(int ownerId) {
+    public  ResponseResult<Boolean> addPropertyToOwner(Property property, int ownerId) {
         Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
         log.debug("Create property method ", ownerId);
 
         if (ownerOptional.isPresent()) {
 
             log.debug("Create property method ", ResponseStatus.SUCCESS);
-            Property property = new Property();
+
             property.setOwner(ownerOptional.get());
             property.setOwnerVatNumber(ownerOptional.get().getVatNumber());
             try {
                 propertyRepository.save(property);
             } catch (Exception e) {
                 log.debug("Create property method ", ResponseStatus.PROPERTY_NOT_CREATED);
-                return new ResponseResult<>(-1, ResponseStatus.PROPERTY_NOT_CREATED, "The property has NOT been saved");
+                return new ResponseResult<Boolean>(false, ResponseStatus.PROPERTY_NOT_CREATED, "The property has NOT been saved");
             }
-            return new ResponseResult<>(property.getId(),
+            return new ResponseResult<Boolean>(true,
                     ResponseStatus.SUCCESS, "The property has been created successfully");
         }
         log.debug("Create property method ", ResponseStatus.OWNER_NOT_FOUND);
-        return new ResponseResult<>(-1, ResponseStatus.OWNER_NOT_FOUND, "The owner cannot be found");
+        return new ResponseResult<Boolean>(false, ResponseStatus.OWNER_NOT_FOUND, "The owner cannot be found");
 
     }
 
     @Override
-    public List<Property> getPropertiesByPropertyIdOrOwnerVatNumber(Integer propertyId, String ownerVatNumber) {
-        if (propertyId != null || ownerVatNumber != null) {
-            List<Property> properties = propertyRepository.findPropertyByIdOrOwnerVatNumber(propertyId, ownerVatNumber);
+    public List<Property> getByOwnerVatNumberOrIdentityE9(String ownerVatNumber, String identityE9) {
+        if (identityE9 != null || ownerVatNumber != null) {
+            List<Property> properties = propertyRepository.findByOwnerVatNumberOrIdentityE9(ownerVatNumber, identityE9);
 
             return properties;
         }
         return null;
+
     }
+
+//    @Override
+//    public List<Property> getByOwnerVatNumberOrIdentityE9(Integer propertyId, String ownerVatNumber) {
+//        if (propertyId != null || ownerVatNumber != null) {
+//            List<Property> properties = propertyRepository.findPropertyByIdOrOwnerVatNumber(propertyId, ownerVatNumber);
+//
+//            return properties;
+//        }
+//    }
 
     @Override
     public List<Repair> getRepairsByPropertyId(Integer propertyId) {
