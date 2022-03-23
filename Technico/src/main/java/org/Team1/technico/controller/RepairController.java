@@ -1,6 +1,7 @@
 package org.Team1.technico.controller;
 
 import lombok.AllArgsConstructor;
+import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.model.Repair;
 import org.Team1.technico.service.RepairService;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class RepairController {
 //    }
 
     @GetMapping("")
-    public List<Repair> get(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "ownerId", required = false) Integer ownerID) {
+    public ResponseResult<List<Repair>> get(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "ownerId", required = false) Integer ownerID) {
         if (startDate != null && endDate != null) {
             LocalDate registrationDateStart = LocalDate.parse(startDate);
             LocalDate registrationDateEnd = LocalDate.parse(endDate);
@@ -33,17 +34,17 @@ public class RepairController {
     }
 
     @GetMapping("/{repairId}")
-    public Repair get(@PathVariable("repairId") int repairId) {
+    public ResponseResult<Repair> get(@PathVariable("repairId") int repairId) {
         return service.readRepair(repairId);
     }
 
     @PutMapping("/{repairId}")
-    public Repair update(@PathVariable("repairId") int repairId, @RequestBody Repair repair) {
+    public ResponseResult<Repair> update(@PathVariable("repairId") int repairId, @RequestBody Repair repair) {
         return service.updateRepair(repairId, repair);
     }
 
     @DeleteMapping("/{repairId}")
-    public boolean delete(@PathVariable("repairId") int repairId) {
+    public ResponseResult<Boolean> delete(@PathVariable("repairId") int repairId) {
         return service.deleteRepair(repairId);
     }
 
