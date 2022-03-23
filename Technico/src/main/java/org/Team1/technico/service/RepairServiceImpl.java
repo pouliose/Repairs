@@ -102,4 +102,10 @@ public class RepairServiceImpl implements RepairService {
         }
         return false;
     }
+
+    @Override
+    public List<Repair> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd) {
+
+        return repairRepository.findByRegistrationDateIsBetween(registrationDateStart,registrationDateEnd);
+    }
 }

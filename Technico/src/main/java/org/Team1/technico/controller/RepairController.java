@@ -5,6 +5,7 @@ import org.Team1.technico.model.Repair;
 import org.Team1.technico.service.RepairService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +21,13 @@ public class RepairController {
     }
 
     @GetMapping("")
-    public List<Repair> get() {
+    public List<Repair> get(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate) {
+        if( startDate != null && endDate != null) {
+            LocalDate registrationDateStart = LocalDate.parse(startDate);
+            LocalDate registrationDateEnd = LocalDate.parse(endDate);
+
+            return service.getByRegistrationDateIsBetween(registrationDateStart, registrationDateEnd);
+        }
         return service.readRepair();
     }
 
