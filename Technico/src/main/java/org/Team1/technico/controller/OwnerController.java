@@ -1,13 +1,12 @@
 package org.Team1.technico.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.AllArgsConstructor;
 import org.Team1.technico.dto.PropertyDto;
+import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.service.OwnerService;
 import org.Team1.technico.service.PropertyService;
-import org.Team1.technico.service.RepairService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,12 +47,12 @@ public class OwnerController {
     }
 
     @GetMapping("/{ownerId}/properties")
-    public List<PropertyDto> getPropertiesOfOwner(@PathVariable("ownerId") int ownerId) {
+    public List<Property> getPropertiesOfOwner(@PathVariable("ownerId") int ownerId) {
         return service.getPropertiesOfOwner(ownerId);
     }
 
     @PostMapping(value = "/{ownerId}/properties")
-    public boolean addPropertyToOwner(@PathVariable("ownerId") int ownerId, @RequestBody Property property) {
+    public ResponseResult<Boolean> addPropertyToOwner(@PathVariable("ownerId") int ownerId, @RequestBody Property property) {
         return propertyService.addPropertyToOwner(property, ownerId);
     }
 
