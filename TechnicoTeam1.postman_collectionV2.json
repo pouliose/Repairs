@@ -446,23 +446,25 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/properties/search?identityE9=123567892&vatNumber=150250352",
+							"raw": "localhost:8080/properties/",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"properties",
-								"search"
+								""
 							],
 							"query": [
 								{
 									"key": "identityE9",
-									"value": "123567892"
+									"value": "123567892",
+									"disabled": true
 								},
 								{
 									"key": "vatNumber",
-									"value": "150250352"
+									"value": "150250352",
+									"disabled": true
 								}
 							]
 						}
@@ -546,13 +548,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/owners/2",
+							"raw": "localhost:8080/properties/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"owners",
+								"properties",
 								"2"
 							]
 						}

@@ -19,34 +19,34 @@ public class OwnerController {
     private PropertyService propertyService;
 
     @PostMapping(value = "")
-    public Owner create(@RequestBody Owner owner) {
+    public ResponseResult<Owner> create(@RequestBody Owner owner) {
         return service.createOwner(owner);
     }
 
     @GetMapping("")
-    public List<Owner> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "email", required = false) String email) {
+    public  ResponseResult<List<Owner>> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "email", required = false) String email) {
         if (vatNumber != null && vatNumber != "" || email !="" && email != null)
             return service.getOwnerByVatNumberOrEmail(vatNumber, email);
         return service.readOwner();
     }
 
     @GetMapping("/{ownerId}")
-    public Owner get(@PathVariable("ownerId") int ownerId) {
+    public ResponseResult<Owner> get(@PathVariable("ownerId") int ownerId) {
         return service.readOwner(ownerId);
     }
 
     @PutMapping("/{ownerId}")
-    public Owner update(@PathVariable("ownerId") int ownerId, @RequestBody Owner owner) {
+    public ResponseResult<Owner> update(@PathVariable("ownerId") int ownerId, @RequestBody Owner owner) {
         return service.updateOwner(ownerId, owner);
     }
 
     @DeleteMapping("/{ownerId}")
-    public boolean delete(@PathVariable("ownerId") int ownerId) {
+    public ResponseResult<Boolean> delete(@PathVariable("ownerId") int ownerId) {
         return service.deleteOwner(ownerId);
     }
 
     @GetMapping("/{ownerId}/properties")
-    public List<Property> getPropertiesOfOwner(@PathVariable("ownerId") int ownerId) {
+    public ResponseResult<List<Property>> getPropertiesOfOwner(@PathVariable("ownerId") int ownerId) {
         return service.getPropertiesOfOwner(ownerId);
     }
 

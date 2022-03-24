@@ -3,7 +3,6 @@ package org.Team1.technico.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.Team1.technico.dto.PropertyDto;
 import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.dto.ResponseStatus;
 import org.Team1.technico.model.Owner;
@@ -19,7 +18,6 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-@Slf4j
 
 public class PropertyServiceImpl implements PropertyService {
 
@@ -27,131 +25,93 @@ public class PropertyServiceImpl implements PropertyService {
     private OwnerRepository ownerRepository;
     private RepairRepository repairRepository;
 
-
     @Override
-    public Property createProperty(Property property) {
-        return propertyRepository.save(property);
+    public ResponseResult<List<Property>> readProperty() {
+        try{
+            return new ResponseResult<>(propertyRepository.findAll(), ResponseStatus.SUCCESS, "Οκ");
+        } catch(Exception e){
+            return new ResponseResult<>(null, ResponseStatus.PROPERTY_NOT_FOUND, "Property not found");
+        }
     }
 
     @Override
-    public List<Property> readProperty() {
-        return propertyRepository.findAll();
+    public ResponseResult<Property> readProperty(int propertyId) {
+        try{
+            Optional<Property> propertyDb = propertyRepository.findById(propertyId);
+            return new ResponseResult<>(propertyDb.get(), ResponseStatus.SUCCESS, "Ok");
+        } catch(Exception e){
+            return new ResponseResult<>(null, ResponseStatus.PROPERTY_NOT_FOUND, "Property not found");
+        }
     }
 
     @Override
-    public Property readProperty(int propertyId) {
+    public ResponseResult<Property> updateProperty(int propertyId, Property property) {
         Optional<Property> propertyDb = propertyRepository.findById(propertyId);
         if (propertyDb.isEmpty())
-            return null;
-
-        return propertyDb.get();
-    }
-
-    @Override
-    public Property updateProperty(int propertyId, Property property) {
-        Optional<Property> propertyDb = propertyRepository.findById(propertyId);
-        if (propertyDb.isEmpty())
-            return null;
+            return new ResponseResult<>(null, ResponseStatus.PROPERTY_NOT_FOUND, "Property id not found");
         try {
-            return propertyDb
+            Property updated = propertyDb
                     .map(match -> {
-                        try {
                             match.setIdentityE9(property.getIdentityE9());
                             match.setAddress(property.getAddress());
                             match.setConstructionYear(property.getConstructionYear());
                             match.setPropertyType(property.getPropertyType());
                             return propertyRepository.save(match);
-                        } catch (Exception e) {
-                            e.getMessage();
-                            return null;
-                        }
                     }).get();
+            return new ResponseResult<>(updated, ResponseStatus.SUCCESS, "Οκ");
         } catch (Exception e) {
-            e.getMessage();
-            return null;
+            return new ResponseResult<>(null, ResponseStatus.PROPERTY_NOT_FOUND, "Save has failed.");
         }
     }
 
     @Override
-    public boolean deleteProperty(int propertyId) {
-        Optional<Property> propertyDb = propertyRepository.findById(propertyId);
-        if (propertyDb.isEmpty() || !propertyDb.get().getRepairs().isEmpty())
-            return false;
-        propertyRepository.delete(propertyDb.get());
-        return true;
+    public ResponseResult<Boolean> deleteProperty(int propertyId) {
+        try{
+            Optional<Property> propertyDb = propertyRepository.findById(propertyId);
+            if (propertyDb.isEmpty() || !propertyDb.get().getRepairs().isEmpty())
+                return new ResponseResult<Boolean>(false, ResponseStatus.PROPERTY_CAN_NOT_BE_DELETED, "Delete has failed.");
+            propertyRepository.delete(propertyDb.get());
+            return new ResponseResult<Boolean>(true, ResponseStatus.SUCCESS, "Ok");
+        } catch(Exception e){
+            return new ResponseResult<Boolean>(false, ResponseStatus.PROPERTY_CAN_NOT_BE_DELETED, "Delete has failed.");
+        }
     }
 
-//    @Override
-//    public boolean addPropertyToOwner(Property property, int ownerId) {
-//        return false;
-//    }
 
     @Override
     public  ResponseResult<Boolean> addPropertyToOwner(Property property, int ownerId) {
-        Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
-        log.debug("Create property method ", ownerId);
-
-        if (ownerOptional.isPresent()) {
-
-            log.debug("Create property method ", ResponseStatus.SUCCESS);
-
-            property.setOwner(ownerOptional.get());
-            property.setOwnerVatNumber(ownerOptional.get().getVatNumber());
-            try {
+        try{
+            Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
+            if (ownerOptional.isPresent()) {
+                property.setOwner(ownerOptional.get());
+                property.setOwnerVatNumber(ownerOptional.get().getVatNumber());
                 propertyRepository.save(property);
-            } catch (Exception e) {
-                log.debug("Create property method ", ResponseStatus.PROPERTY_NOT_CREATED);
-                return new ResponseResult<Boolean>(false, ResponseStatus.PROPERTY_NOT_CREATED, "The property has NOT been saved");
+                return new ResponseResult<>(true, ResponseStatus.SUCCESS, "Ok");
             }
-            return new ResponseResult<Boolean>(true,
-                    ResponseStatus.SUCCESS, "The property has been created successfully");
+        } catch(Exception e){
+            e.getMessage();
         }
-        log.debug("Create property method ", ResponseStatus.OWNER_NOT_FOUND);
         return new ResponseResult<Boolean>(false, ResponseStatus.OWNER_NOT_FOUND, "The owner cannot be found");
-
     }
 
     @Override
-    public List<Property> getByOwnerVatNumberOrIdentityE9(String ownerVatNumber, String identityE9) {
-        if (identityE9 != null || ownerVatNumber != null) {
-            List<Property> properties = propertyRepository.findByOwnerVatNumberOrIdentityE9(ownerVatNumber, identityE9);
-
-            return properties;
+    public ResponseResult<List<Property>> getByOwnerVatNumberOrIdentityE9(String ownerVatNumber, String identityE9) {
+        try{
+            if (identityE9 != null || ownerVatNumber != null) {
+                return new ResponseResult<>(propertyRepository.findByOwnerVatNumberOrIdentityE9(ownerVatNumber, identityE9), ResponseStatus.SUCCESS, "Οκ");
+            }
+        } catch(Exception e){
+            e.getMessage();
         }
-        return null;
-
-    }
-
-//    @Override
-//    public List<Property> getByOwnerVatNumberOrIdentityE9(Integer propertyId, String ownerVatNumber) {
-//        if (propertyId != null || ownerVatNumber != null) {
-//            List<Property> properties = propertyRepository.findPropertyByIdOrOwnerVatNumber(propertyId, ownerVatNumber);
-//
-//            return properties;
-//        }
-//    }
-
-    @Override
-    public List<Repair> getRepairsByPropertyId(Integer propertyId) {
-        return propertyRepository.getRepairsByPropertyId(propertyId);
+        return new ResponseResult<>(null, ResponseStatus.PROPERTY_NOT_FOUND, "Property not found for the given search values.");
     }
 
     @Override
-    public ResponseResult<List<PropertyDto>> ownerPropertyRepairs(int ownerId) {
-        Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
-        if (ownerOptional.isEmpty()) {
-
-            log.debug("Create basket method ", ResponseStatus.OWNER_NOT_FOUND);
-            return new ResponseResult<>(null,
-                    ResponseStatus.OWNER_NOT_FOUND, "The customer cannot be found");
+    public ResponseResult<List<Repair>> getRepairsByPropertyId(Integer propertyId) {
+        try{
+            return new ResponseResult<>(propertyRepository.getRepairsByPropertyId(propertyId), ResponseStatus.SUCCESS, "Οκ");
+        } catch(Exception e){
+            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "Repairs cannot be found");
         }
-        List<Property> properties = propertyRepository.findPropertyByOwnerId(ownerId);
-
-        List<PropertyDto> propertyDtoList = properties
-                .stream()
-                .map(property -> new PropertyDto().addList()).toList();
-        return new ResponseResult<>(propertyDtoList, ResponseStatus.SUCCESS, "All OK");
-
     }
-
 }

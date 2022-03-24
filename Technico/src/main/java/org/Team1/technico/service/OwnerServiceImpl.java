@@ -2,6 +2,8 @@ package org.Team1.technico.service;
 
 import lombok.AllArgsConstructor;
 import org.Team1.technico.TechnicoMain;
+import org.Team1.technico.dto.ResponseResult;
+import org.Team1.technico.dto.ResponseStatus;
 import org.Team1.technico.exceptions.EmailException;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
@@ -24,40 +26,50 @@ public class OwnerServiceImpl implements OwnerService {
     private static final Logger logger = LoggerFactory.getLogger(TechnicoMain.class);
 
     @Override
-    public Owner createOwner(Owner owner) {
+    public ResponseResult<Owner> createOwner(Owner owner) {
         try {
             if (validateEmail(owner.getEmail()))
-                return ownerRepository.save(owner);
+                return new ResponseResult<>(ownerRepository.save(owner), ResponseStatus.SUCCESS, "Oκ");
         } catch (Exception e) {
             e.getMessage();
         }
-        return null;
+        return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, "Save has failed.");
     }
 
     @Override
-    public List<Owner> readOwner() {
-        return ownerRepository.findAll();
-    }
-
-    @Override
-    public Owner readOwner(int ownerId) {
-        return ownerRepository.findById(ownerId).get();
-    }
-
-    @Override
-    public List<Owner> getOwnerByVatNumberOrEmail(String vatNumber, String email) {
-        if (vatNumber != null || email != "" && email != null)
-            return ownerRepository.findOwnersByVatNumberOrEmail(vatNumber, email);
-        return null;
-    }
-
-    @Override
-    public Owner updateOwner(int ownerId, Owner owner) {
-        Optional<Owner> ownerDb = ownerRepository.findById(ownerId);
-        if (ownerDb.isEmpty())
-            return null;
+    public ResponseResult<List<Owner>> readOwner() {
         try {
-            return ownerDb.
+            return new ResponseResult<>(ownerRepository.findAll(), ResponseStatus.SUCCESS, "Oκ");
+        } catch (Exception e) {
+            return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Owner not found");
+        }
+    }
+
+    @Override
+    public ResponseResult<Owner> readOwner(int ownerId) {
+        try {
+            return new ResponseResult<>(ownerRepository.findById(ownerId).get(), ResponseStatus.SUCCESS, "Oκ");
+        } catch (Exception e) {
+            return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Owner not found");
+        }
+    }
+
+    @Override
+    public ResponseResult<List<Owner>> getOwnerByVatNumberOrEmail(String vatNumber, String email) {
+        try {
+            return new ResponseResult<>(ownerRepository.findOwnersByVatNumberOrEmail(vatNumber, email), ResponseStatus.SUCCESS, "Oκ");
+        } catch (Exception e) {
+            return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Owner not found");
+        }
+    }
+
+    @Override
+    public ResponseResult<Owner> updateOwner(int ownerId, Owner owner) {
+        try {
+            Optional<Owner> ownerDb = ownerRepository.findById(ownerId);
+            if (ownerDb.isEmpty())
+                return new ResponseResult<>(null, ResponseStatus.OWNER_CANNOT_BE_UPDATED, "Fail to update");
+            Owner updated = ownerDb.
                     map(match -> {
                         try {
                             match.setVatNumber(owner.getVatNumber());
@@ -75,31 +87,37 @@ public class OwnerServiceImpl implements OwnerService {
                             e.getMessage();
                             return null;
                         }
-
                     }).get();
+            return new ResponseResult<>(updated, ResponseStatus.SUCCESS, "Oκ");
         } catch (Exception e) {
-            e.getMessage();
-            return null;
+            return new ResponseResult<>(null, ResponseStatus.OWNER_CANNOT_BE_UPDATED, "Fail to update");
         }
     }
 
     @Override
-    public boolean deleteOwner(int ownerId) {
-        Optional<Owner> ownerDb = ownerRepository.findById(ownerId);
-        if (ownerDb.isEmpty() || ! ownerDb.get().getProperties().isEmpty())
-            return false;
-        ownerRepository.delete(ownerDb.get());
-        return true;
+    public ResponseResult<Boolean> deleteOwner(int ownerId) {
+        try {
+            Optional<Owner> ownerDb = ownerRepository.findById(ownerId);
+            if (ownerDb.isEmpty() || !ownerDb.get().getProperties().isEmpty())
+                return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Delete has failed.");
+            ownerRepository.delete(ownerDb.get());
+            return new ResponseResult<>(true, ResponseStatus.SUCCESS, "Oκ");
+        } catch (Exception e) {
+            return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Delete has failed.");
+        }
     }
 
     @Override
-    public List<Property> getPropertiesOfOwner(int ownerId) {
-        Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
-        if (ownerOptional.isEmpty())
-            return null;
-
-        return ownerOptional.get().getProperties();
- }
+    public ResponseResult<List<Property>> getPropertiesOfOwner(int ownerId) {
+        try {
+            Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
+            if (ownerOptional.isEmpty())
+                return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Owner not found");
+            return new ResponseResult<>(ownerOptional.get().getProperties(), ResponseStatus.SUCCESS, "Oκ");
+        } catch (Exception e) {
+            return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Failed to found properties.");
+        }
+    }
 
     public boolean validateEmail(String email) {
         try {

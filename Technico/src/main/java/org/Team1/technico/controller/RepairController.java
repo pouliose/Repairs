@@ -14,12 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/repairs")
 public class RepairController {
-    private RepairService service;
 
-//    @PostMapping(value = "")
-//    public Repair create(@RequestBody Repair repair) {
-//        return service.createRepair(repair);
-//    }
+    private RepairService service;
 
     @GetMapping("")
     public ResponseResult<List<Repair>> get(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "ownerId", required = false) Integer ownerID) {
