@@ -5,6 +5,9 @@
 *.log
 /logs
 
+# Txt notes
+*.txt
+
 # BlueJ files
 *.ctxt
 
