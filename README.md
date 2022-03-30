@@ -17,7 +17,7 @@ repairs</li>
 <li>ability for customers to oversee the progress of repair/renovation
 work on their property.</li></ul></p>
 
-##How to use it
+## How to use it
 <p>A. Select one of the following options:<p>
 <ol> 
 <li>Clone it </li>
@@ -51,3 +51,4 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+<p style="text-align: right">(<a href="#top">back to top</a>)</p>
