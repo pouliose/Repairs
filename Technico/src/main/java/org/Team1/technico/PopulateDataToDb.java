@@ -33,10 +33,10 @@ public class PopulateDataToDb {
         ownerRepository.saveAll(generateOwners());
         log.info("Owners saved!");
         propertyRepository.saveAll(generateProperties());
-        propertyRepository.saveAll(matchPropertyOwners(propertyRepository.findAll(), ownerRepository.findAll()));
+        //propertyRepository.saveAll(matchPropertyOwners(propertyRepository.findAll(), ownerRepository.findAll()));
         log.info("Properties saved!");
         repairRepository.saveAll(generateRepairs());
-        repairRepository.saveAll(matchProperyRepairs(propertyRepository.findAll(), repairRepository.findAll()));
+        //repairRepository.saveAll(matchProperyRepairs(propertyRepository.findAll(), repairRepository.findAll()));
         log.info("Repairs saved!");
         log.info("Database setup completed!");
     }

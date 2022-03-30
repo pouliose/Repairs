@@ -27,13 +27,61 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public ResponseResult<Owner> createOwner(Owner owner) {
+        String message;
         try {
-            if (validateEmail(owner.getEmail()))
-                return new ResponseResult<>(ownerRepository.save(owner), ResponseStatus.SUCCESS, "Oκ");
+            //VAT number validation
+            if (owner.getVatNumber()==null){
+                message = "VAT number is mandatory field.";
+                return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+            } else {
+                if(owner.getVatNumber().length()!=9){
+                    message = "You did not provide a 9 digit VAT number.";
+                    return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+                }
+                if (ownerRepository.findAll().stream().filter(ownerTemp->ownerTemp.getVatNumber().equals(owner.getVatNumber())).count() == 1){
+                    message = "The VAT number you provided already exists.";
+                    return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+                }
+            }
+            if(owner.getFirstName()==null || owner.getFirstName().length()<2){
+                message = "First name is mandatory field.";
+                return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+            }
+            if(owner.getLastName()==null || owner.getLastName().length()<2){
+                message = "Last name is mandatory field.";
+                return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+            }
+            //Email validation
+            if(!(owner.getEmail()==null)){
+                if (!(validateEmail(owner.getEmail()))){
+                    message = "You did not provide valid email address.";
+                    return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+                }
+                System.out.println(ownerRepository.findAll().stream().map(Owner::getEmail).filter(email -> email.equals(owner.getEmail())).toList().size());
+                if(ownerRepository.findAll().stream().filter(ownerTemp->ownerTemp.getEmail().equals(owner.getEmail())).count() == 1){
+                    message = "The email you provided is already used from other account.";
+                    return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+                }
+            }
+            //Username number validation
+            if (owner.getUsername()==null || owner.getUsername().length()<2){
+                message = "Username is mandatory field.";
+                return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+            } else {
+                if (ownerRepository.findAll().stream().filter(ownerTemp->ownerTemp.getUsername().equals(owner.getUsername())).count() == 1){
+                    message = "The username you provided already exists.";
+                    return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+                }
+            }
+            if(owner.getPassword()==null || owner.getPassword().length()<2){
+                message = "Password is mandatory field.";
+                return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, message);
+            }
+            return new ResponseResult<>(ownerRepository.save(owner), ResponseStatus.SUCCESS, "Oκ");
         } catch (Exception e) {
             e.getMessage();
+            return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, e.getMessage());
         }
-        return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_CREATED, "Save has failed.");
     }
 
     @Override

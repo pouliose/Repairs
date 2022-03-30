@@ -31,7 +31,7 @@ public class Owner {
     private String lastName;
     private String address;
     private String phoneNumber;
-    @Column(unique=true)
+    //@Column(unique=true)
     private String email;
     @Column(unique=true)
     @NotBlank(message = "Username is mandatory field.")
