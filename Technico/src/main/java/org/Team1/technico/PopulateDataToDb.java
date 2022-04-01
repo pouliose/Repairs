@@ -24,6 +24,10 @@ public class PopulateDataToDb {
     private PropertyRepository propertyRepository;
     private RepairRepository repairRepository;
 
+    /**
+     * A method that clears previously saved data to DB
+     * and initiates new data
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void restoreDatabase() {
         log.info("Clearing repositories.");
@@ -33,14 +37,18 @@ public class PopulateDataToDb {
         ownerRepository.saveAll(generateOwners());
         log.info("Owners saved!");
         propertyRepository.saveAll(generateProperties());
-        //propertyRepository.saveAll(matchPropertyOwners(propertyRepository.findAll(), ownerRepository.findAll()));
+        propertyRepository.saveAll(matchPropertyOwners(propertyRepository.findAll(), ownerRepository.findAll()));
         log.info("Properties saved!");
         repairRepository.saveAll(generateRepairs());
-        //repairRepository.saveAll(matchProperyRepairs(propertyRepository.findAll(), repairRepository.findAll()));
+        repairRepository.saveAll(matchProperyRepairs(propertyRepository.findAll(), repairRepository.findAll()));
         log.info("Repairs saved!");
         log.info("Database setup completed!");
     }
 
+    /**
+     * A method that generates owner instances
+     * @return a list of owners
+     */
     private static List<Owner> generateOwners() {
         List<Owner> owners = new ArrayList<>();
         Owner owner1 = new Owner("150250350", "John", "Homes", "50 7701 Avonlan Way 50, Lloydminster, Canada", "+15877890714", "john@mail.com", "johnHomes", "secret1!@");
@@ -52,6 +60,10 @@ public class PopulateDataToDb {
         return owners;
     }
 
+    /**
+     * A method that generates property instances
+     * @return a list of properties
+     */
     private static List<Property> generateProperties() {
         List<Property> properties = new ArrayList<>();
         Property property1 = new Property("123567890", "50 7701 Boucherleche Pathway 50, Lloydminster, Canada", 1990, PropertyType.FLAT);
@@ -63,6 +75,10 @@ public class PopulateDataToDb {
         return properties;
     }
 
+    /**
+     * A method that generates repair instances
+     * @return a list of repairs
+     */
     private static List<Repair> generateRepairs() {
         List<Repair> repairs = new ArrayList<>();
         LocalDate datetime1 = LocalDate.now().minusYears(1L);
@@ -83,6 +99,12 @@ public class PopulateDataToDb {
         return repairs;
     }
 
+    /**
+     *
+     * @param properties
+     * @param owners
+     * @return matches randomly properties and owners and return a list of updated properties with completed the fields owner, ownerVatNumber
+     */
     private static List<Property> matchPropertyOwners(List<Property> properties, List<Owner> owners) {
         for (Property property : properties) {
             Owner ownerRandom = owners.get((int) (Math.random() * owners.size()));
@@ -93,6 +115,12 @@ public class PopulateDataToDb {
         return properties;
     }
 
+    /**
+     *
+     * @param properties
+     * @param repairs
+     * @return matches randomly properties and repairs and return a list of updated repairs with completed the field property
+     */
     private static List<Repair> matchProperyRepairs(List<Property> properties, List<Repair> repairs) {
         for (Repair repair : repairs) {
             repair.setProperty(properties.get((int) (Math.random() * properties.size())));

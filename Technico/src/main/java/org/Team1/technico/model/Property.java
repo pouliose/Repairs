@@ -22,7 +22,7 @@ public class Property {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique=true)
-    @NotBlank(message = "Identity numbers is mandatory field.")
+    @NotBlank(message = "Identity number is mandatory field.")
     private String identityE9;
     @NotBlank(message = "Address is mandatory field.")
     private String address;

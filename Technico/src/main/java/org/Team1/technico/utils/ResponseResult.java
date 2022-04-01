@@ -1,4 +1,4 @@
-package org.Team1.technico.dto;
+package org.Team1.technico.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class ResponseResult<T> {
     private T data;
     private ResponseStatus status;
-    private String message;}
+    private String message;
+}
