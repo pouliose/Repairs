@@ -1,13 +1,12 @@
 package org.Team1.technico.service;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.Team1.technico.dto.ResponseResult;
-import org.Team1.technico.dto.ResponseStatus;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
 import org.Team1.technico.repository.PropertyRepository;
 import org.Team1.technico.repository.RepairRepository;
+import org.Team1.technico.utils.ResponseResult;
+import org.Team1.technico.utils.ResponseStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,56 +21,6 @@ public class RepairServiceImpl implements RepairService {
     private PropertyRepository propertyRepository;
 
     @Override
-    public ResponseResult<List<Repair>> readRepair() {
-        try {
-            return new ResponseResult<>(repairRepository.findAll(), ResponseStatus.SUCCESS, "Ok");
-        } catch (Exception e) {
-            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, e.getMessage());
-        }
-    }
-
-    @Override
-    public ResponseResult<Repair> readRepair(int repairId) {
-        Optional<Repair> repairDb = repairRepository.findById(repairId);
-        try {
-            return new ResponseResult<>(repairDb.get(), ResponseStatus.SUCCESS, "Ok");
-        } catch (Exception e) {
-            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, e.getMessage());
-        }
-    }
-
-
-    @Override
-    public ResponseResult<Repair> updateRepair(int repairId, Repair repair) {
-        try {
-            Optional<Repair> repairDb = repairRepository.findById(repairId);
-            Repair match = repairDb.get();
-            match.setRegistrationDate(repair.getRegistrationDate());
-            match.setProperty(repair.getProperty());
-            match.setCompletionDate(repair.getCompletionDate());
-            match.setRepairStatus(repair.getRepairStatus());
-            match.setRepairType(repair.getRepairType());
-            match.setCost(repair.getCost());
-            match.setDescription(repair.getDescription());
-            repairRepository.save(match);
-            return new ResponseResult<>(match, ResponseStatus.SUCCESS, "Ok");
-        } catch (Exception e) {
-            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, e.getMessage());
-        }
-    }
-
-    @Override
-    public ResponseResult<Boolean> deleteRepair(int repairId) {
-        try {
-            Optional<Repair> repairDb = repairRepository.findById(repairId);
-            repairRepository.delete(repairDb.get());
-            return new ResponseResult<>(true, ResponseStatus.SUCCESS, "Ok");
-        } catch (Exception e) {
-            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, e.getMessage());
-        }
-    }
-
-    @Override
     public ResponseResult<Boolean> addRepairToProperty(Repair repair, int propertyId) {
         Optional<Property> propertyOptional = propertyRepository.findById(propertyId);
         try {
@@ -80,30 +29,103 @@ public class RepairServiceImpl implements RepairService {
                 repair.setProperty(propertyOptional.get());
                 repairRepository.save(repair);
                 return new ResponseResult<>(true, ResponseStatus.SUCCESS, "Ok");
-            }
+            } else
+                return new ResponseResult<>(false, ResponseStatus.PROPERTY_NOT_FOUND, "There is any property with id= " + propertyId);
         } catch (Exception e) {
             e.getMessage();
         }
-        return new ResponseResult<>(false, ResponseStatus.PROPERTY_NOT_FOUND, "The property cannot be found");
+        return new ResponseResult<>(false, ResponseStatus.REPAIR_NOT_CREATED, "Failed to create repair.");
+    }
+
+    @Override
+    public ResponseResult<List<Repair>> readRepair() {
+        try {
+            List<Repair> repairs = repairRepository.findAll();
+            if (repairs != null && !repairs.isEmpty())
+                return new ResponseResult<>(repairs, ResponseStatus.SUCCESS, "Ok");
+            else
+                return new ResponseResult<>(repairs, ResponseStatus.SUCCESS, "No repairs to show.");
+        } catch (Exception e) {
+            e.getMessage();
+            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "Failed to find repairs.");
+        }
+    }
+
+    @Override
+    public ResponseResult<Repair> readRepair(int repairId) {
+        try {
+            Optional<Repair> repairDb = repairRepository.findById(repairId);
+            if (repairDb != null && repairDb.isPresent())
+                return new ResponseResult<>(repairDb.get(), ResponseStatus.SUCCESS, "Ok");
+            else
+                return new ResponseResult<>(null, ResponseStatus.SUCCESS, "There is not any repair with id: " + repairId);
+        } catch (Exception e) {
+            e.getMessage();
+            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "Failed to find repair.");
+        }
+    }
+
+
+    @Override
+    public ResponseResult<Repair> updateRepair(int repairId, Repair repair) {
+        try {
+            Optional<Repair> repairDb = repairRepository.findById(repairId);
+            if(!repairDb.isEmpty()){
+                Repair match = repairDb.get();
+                match.setRegistrationDate(repair.getRegistrationDate());
+                // The UI will not need to specify the property in which the repair already belongs
+                //match.setProperty(repair.getProperty());
+                match.setCompletionDate(repair.getCompletionDate());
+                match.setRepairStatus(repair.getRepairStatus());
+                match.setRepairType(repair.getRepairType());
+                match.setCost(repair.getCost());
+                match.setDescription(repair.getDescription());
+                repairRepository.save(match);
+                return new ResponseResult<>(match, ResponseStatus.SUCCESS, "Ok");
+            } else
+                return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "Repair with id: " + repairId + " does not exist.");
+        } catch (Exception e) {
+            e.getMessage();
+            return new ResponseResult<>(null, ResponseStatus.REPAIR_CANNOT_BE_UPDATED, "Update has failed.");
+        }
+    }
+
+    @Override
+    public ResponseResult<Boolean> deleteRepair(int repairId) {
+        try {
+            Optional<Repair> repairDb = repairRepository.findById(repairId);
+            if (repairDb.isEmpty())
+                return new ResponseResult<>(false, ResponseStatus.REPAIR_NOT_FOUND, "There is not any repair with id: " + repairId);
+            repairRepository.delete(repairDb.get());
+            return new ResponseResult<>(true, ResponseStatus.SUCCESS, "Ok");
+        } catch (Exception e) {
+            e.getMessage();
+            return new ResponseResult<>(null, ResponseStatus.REPAIR_CANNOT_BE_DELETED, "Delete has failed.");
+        }
     }
 
     @Override
     public ResponseResult<List<Repair>> getByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd) {
         try {
-            return new ResponseResult<>(repairRepository.findByRegistrationDateIsBetween(registrationDateStart, registrationDateEnd),
-                    ResponseStatus.SUCCESS, "Ok");
-        } catch (Exception e){
-            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "No result for the given search values.");
+            List<Repair> repairs = repairRepository.findByRegistrationDateIsBetween(registrationDateStart, registrationDateEnd);
+            if (!repairs.isEmpty())
+                return new ResponseResult<>(repairs, ResponseStatus.SUCCESS, "Ok");
+            else
+                return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "No search result for the given time period.");
+        } catch (Exception e) {
+            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "Failed to find repair.");
         }
-
     }
 
     @Override
-    public ResponseResult<List<Repair>> getByOwner_Id(Integer id) {
-        try{
-            return new ResponseResult<>(repairRepository.findByProperty_Owner_Id(id), ResponseStatus.SUCCESS, "Ok");
-        } catch(Exception e){
-            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "No result for the given owner id.");
+    public ResponseResult<List<Repair>> getByOwnerId(Integer ownerId) {
+        try {
+            List<Repair> repairs = repairRepository.findByProperty_Owner_Id(ownerId);
+            if(repairs.isEmpty())
+                return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "There are not any repairs for owner with id: " + ownerId);
+            return new ResponseResult<>(repairs, ResponseStatus.SUCCESS, "Ok");
+        } catch (Exception e) {
+            return new ResponseResult<>(null, ResponseStatus.REPAIR_NOT_FOUND, "Failed to find repairs.");
         }
     }
 }

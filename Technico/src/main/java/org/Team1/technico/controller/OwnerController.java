@@ -1,11 +1,11 @@
 package org.Team1.technico.controller;
 
 import lombok.AllArgsConstructor;
-import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.service.OwnerService;
 import org.Team1.technico.service.PropertyService;
+import org.Team1.technico.utils.ResponseResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

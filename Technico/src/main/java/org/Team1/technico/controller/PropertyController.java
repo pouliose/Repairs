@@ -2,11 +2,11 @@ package org.Team1.technico.controller;
 
 
 import lombok.AllArgsConstructor;
-import org.Team1.technico.dto.ResponseResult;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.model.Repair;
 import org.Team1.technico.service.PropertyService;
 import org.Team1.technico.service.RepairService;
+import org.Team1.technico.utils.ResponseResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class PropertyController {
 
     @GetMapping(value = "")
     public ResponseResult<List<Property>> get(@RequestParam(name = "vatNumber", required = false) String vatNumber, @RequestParam(name = "identityE9", required = false) String identityE9) {
-        if ( (identityE9!=null  && !identityE9.isBlank()) || (vatNumber != null && vatNumber != ""))
+        if ( (identityE9!=null  && !identityE9.equals("") || (vatNumber != null && !vatNumber.equals(""))))
             return propertyService.getByOwnerVatNumberOrIdentityE9(vatNumber, identityE9);
         return propertyService.readProperty();
     }
