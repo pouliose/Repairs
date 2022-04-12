@@ -42,9 +42,10 @@ public class PopulateDataToDb {
         userRepository.deleteAll();
         roleRepository.deleteAll();
 
-
         roleRepository.saveAll(generateRoles());
+        log.info("Roles saved!");
         generateUsers(roleRepository.findAll());
+        log.info("Users saved!");
 
         ownerRepository.saveAll(generateOwners());
         log.info("Owners saved!");
@@ -55,6 +56,37 @@ public class PopulateDataToDb {
         repairRepository.saveAll(matchProperyRepairs(propertyRepository.findAll(), repairRepository.findAll()));
         log.info("Repairs saved!");
         log.info("Database setup completed!");
+    }
+
+    /**
+     * A method that generates 3 indicative type of roles
+     *
+     * @return a list of roles
+     */
+    private static List<Role> generateRoles() {
+        List<Role> roles = new ArrayList<>();
+        Role roleAdmin = new Role(ERole.ROLE_ADMIN);
+        Role roleModerator = new Role(ERole.ROLE_MODERATOR);
+        Role roleUser = new Role(ERole.ROLE_USER);
+        roles.add(roleAdmin);
+        roles.add(roleModerator);
+        roles.add(roleUser);
+        return roles;
+    }
+
+    /**
+     * A method that generates 2 users and assigns roles to them
+     *
+     * @param roles
+     */
+    private void generateUsers(List<Role> roles) {
+        AppUser user1 = new AppUser("john", "john@mail.com", "1234");
+        AppUser user2 = new AppUser("jake", "jake@mail.com", "1234");
+        List<AppUser> users = new ArrayList<>();
+        user1.setRoles(Set.of(roles.get(0)));
+        user2.setRoles(Set.of(roles.get(1)));
+        userService.saveUser(user1);
+        userService.saveUser(user2);
     }
 
     /**
@@ -115,33 +147,6 @@ public class PopulateDataToDb {
     }
 
     /**
-     * A method that generates 3 indicative type of roles
-     *
-     * @return a list of roles
-     */
-    private static List<Role> generateRoles() {
-        List<Role> roles = new ArrayList<>();
-        Role roleAdmin = new Role(ERole.ROLE_ADMIN);
-        Role roleModerator = new Role(ERole.ROLE_MODERATOR);
-        Role roleUser = new Role(ERole.ROLE_USER);
-        roles.add(roleAdmin);
-        roles.add(roleModerator);
-        roles.add(roleUser);
-        return roles;
-    }
-
-
-    private void generateUsers(List<Role> roles) {
-        AppUser user1 = new AppUser("john", "john@mail.com", "1234");
-        AppUser user2 = new AppUser("jake", "jake@mail.com", "1234");
-        List<AppUser> users = new ArrayList<>();
-        user1.setRoles(Set.of(roles.get(0)));
-        user2.setRoles(Set.of(roles.get(1)));
-        userService.saveUser(user1);
-        userService.saveUser(user2);
-    }
-
-    /**
      * @param properties
      * @param owners
      * @return matches randomly properties and owners and return a list of updated properties with completed the fields owner, ownerVatNumber
@@ -168,5 +173,4 @@ public class PopulateDataToDb {
         log.info("Properties and repairs were matched!");
         return repairs;
     }
-
 }

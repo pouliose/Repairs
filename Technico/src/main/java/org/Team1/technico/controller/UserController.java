@@ -5,13 +5,14 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.Team1.technico.dto.AppUserDto;
 import org.Team1.technico.model.AppUser;
-import org.Team1.technico.model.ERole;
 import org.Team1.technico.model.Role;
 import org.Team1.technico.service.UserService;
+import org.Team1.technico.utils.AlgorithmUtil;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,6 +36,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api")
 public class UserController {
     private final UserService userService;
+    private final Environment env;
 
     @GetMapping("/users")
     public ResponseEntity<List<AppUser>> getUsers() {
@@ -54,8 +56,8 @@ public class UserController {
     }
 
     @PostMapping("/role/addtouser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
-        userService.addRoleToUser(form.getUsername(), form.getRoleName());
+    public ResponseEntity<?> addRoleToUser(@RequestBody AppUserDto appUserDto) {
+        userService.addRoleToUser(appUserDto.getUsername(), appUserDto.getRoleName());
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
         return ResponseEntity.ok().build();
     }
@@ -63,10 +65,12 @@ public class UserController {
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
+
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
+                AlgorithmUtil algorithmInstance = new AlgorithmUtil(env);
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256("secretText".getBytes());
+                Algorithm algorithm = algorithmInstance.algorUtilMethod();
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
@@ -75,7 +79,7 @@ public class UserController {
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getRoles().stream().map(r-> r.getName().toString()).collect(Collectors.toList()))
+                        .withClaim("roles", user.getRoles().stream().map(r -> r.getName().toString()).collect(Collectors.toList()))
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();
@@ -99,10 +103,4 @@ public class UserController {
             throw new RuntimeException("Refresh token is missing");
         }
     }
-}
-
-@Data
-class RoleToUserForm {
-    private String username;
-    private ERole roleName;
 }
