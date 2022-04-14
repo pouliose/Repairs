@@ -97,7 +97,6 @@ public class UserController {
                 error.put("error_message", exception.getMessage());
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
-
             }
         } else {
             throw new RuntimeException("Refresh token is missing");

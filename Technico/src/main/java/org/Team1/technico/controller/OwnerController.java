@@ -6,10 +6,13 @@ import org.Team1.technico.model.Property;
 import org.Team1.technico.service.OwnerService;
 import org.Team1.technico.service.PropertyService;
 import org.Team1.technico.utils.ResponseResult;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -31,6 +34,15 @@ public class OwnerController {
         if (vatNumber != null && vatNumber != "" || email !="" && email != null)
             return service.getOwnerByVatNumberOrEmail(vatNumber, email);
         return service.readOwner();
+    }
+
+    @GetMapping("/paged")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public ResponseResult<Map<String, Object>> get(@RequestParam(required = false) String subVatNumber,
+                                                   @RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page, size);
+        return service.getOwnerContainsSubVat(paging, subVatNumber);
     }
 
     @GetMapping("/{ownerId}")

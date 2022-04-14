@@ -7,10 +7,38 @@ import org.Team1.technico.model.Role;
 import java.util.List;
 
 public interface UserService {
-    AppUser saveUser(AppUser user);
-    Role saveRole(Role role);
-    void addRoleToUser(String username, ERole roleName);
-    AppUser getUser(String username);
-    List<AppUser> getUsers();
 
+    /**
+     *
+     * @param user
+     * @return AppUser
+     */
+    AppUser saveUser(AppUser user);
+
+    /**
+     *
+     * @param role
+     * @return Role
+     */
+    Role saveRole(Role role);
+
+    /**
+     *
+     * @param username
+     * @param roleName
+     */
+    void addRoleToUser(String username, ERole roleName);
+
+    /**
+     *
+     * @param username
+     * @return AppUser
+     */
+    AppUser getUser(String username);
+
+    /**
+     *
+     * @return List<AppUser>
+     */
+    List<AppUser> getUsers();
 }
