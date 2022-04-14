@@ -24,8 +24,7 @@ work on their property.</li></ul>
 <li>Download it as ZIP file</li>
 </ol>
 
-<p>B. Manually create a database with name "Team1Technico" 
-docker compose</p>
+<p>B. Manually create a database with name "Team1Technico"</p>
 <p>C. Run the application from your preferable IDE</p>
 
 <p>D. Use the application and interact with the REST API either by:</p>
