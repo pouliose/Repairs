@@ -3,8 +3,10 @@ package org.Team1.technico.service;
 import org.Team1.technico.model.Owner;
 import org.Team1.technico.model.Property;
 import org.Team1.technico.utils.ResponseResult;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OwnerService {
     /**
@@ -30,6 +32,14 @@ public interface OwnerService {
      * @return ResponseResult<List < Owner>>
      */
     ResponseResult<List<Owner>> getOwnerByVatNumberOrEmail(String vatNumber, String email);
+
+    /**
+     *
+     * @param paging
+     * @param subVatNumber
+     * @return ResponseResult<ResponseEntity<Map<String, Object>>>
+     */
+    ResponseResult<Map<String, Object>> getOwnerContainsSubVat (Pageable paging, String subVatNumber);
 
     /**
      * @param ownerId

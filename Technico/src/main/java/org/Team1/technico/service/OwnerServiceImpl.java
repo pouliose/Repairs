@@ -10,10 +10,11 @@ import org.Team1.technico.utils.ResponseResult;
 import org.Team1.technico.utils.ResponseStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @AllArgsConstructor
@@ -77,6 +78,24 @@ public class OwnerServiceImpl implements OwnerService {
         } catch (Exception e) {
             return new ResponseResult<>(null, ResponseStatus.OWNER_NOT_FOUND, "Failed to find owner.");
         }
+    }
+
+    @Override
+    public ResponseResult<Map<String, Object>> getOwnerContainsSubVat(Pageable paging, String subVatNumber) {
+        List<Owner> ownersWithSubVat = new ArrayList<>();
+        Page<Owner> pageSubVats = null;
+        if(subVatNumber == null) {
+            pageSubVats = ownerRepository.findAll(paging);
+        } else {
+            pageSubVats = ownerRepository.findOwnersByVatNumberContaining(subVatNumber, paging);
+        }
+        ownersWithSubVat = pageSubVats.getContent();
+        Map<String, Object> response = new HashMap<>();
+        response.put("owners", ownersWithSubVat);
+        response.put("currentPage", pageSubVats.getNumber());
+        response.put("totalItems", pageSubVats.getTotalElements());
+        response.put("totalPages", pageSubVats.getTotalPages());
+        return new ResponseResult<>(response, ResponseStatus.SUCCESS, "Ok");
     }
 
     /**

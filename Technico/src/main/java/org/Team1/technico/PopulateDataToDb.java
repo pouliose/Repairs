@@ -2,9 +2,8 @@ package org.Team1.technico;
 
 import lombok.AllArgsConstructor;
 import org.Team1.technico.model.*;
-import org.Team1.technico.repository.OwnerRepository;
-import org.Team1.technico.repository.PropertyRepository;
-import org.Team1.technico.repository.RepairRepository;
+import org.Team1.technico.repository.*;
+import org.Team1.technico.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -15,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @Configuration
@@ -24,6 +24,11 @@ public class PopulateDataToDb {
     private PropertyRepository propertyRepository;
     private RepairRepository repairRepository;
 
+    private RoleRepository roleRepository;
+    private UserRepository userRepository;
+
+    private UserService userService;
+
     /**
      * A method that clears previously saved data to DB
      * and initiates new data
@@ -31,9 +36,17 @@ public class PopulateDataToDb {
     @EventListener(ApplicationReadyEvent.class)
     public void restoreDatabase() {
         log.info("Clearing repositories.");
-        ownerRepository.deleteAll();
         repairRepository.deleteAll();
         propertyRepository.deleteAll();
+        ownerRepository.deleteAll();
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
+
+        roleRepository.saveAll(generateRoles());
+        log.info("Roles saved!");
+        generateUsers(roleRepository.findAll());
+        log.info("Users saved!");
+
         ownerRepository.saveAll(generateOwners());
         log.info("Owners saved!");
         propertyRepository.saveAll(generateProperties());
@@ -46,22 +59,68 @@ public class PopulateDataToDb {
     }
 
     /**
+     * A method that generates 3 indicative type of roles
+     *
+     * @return a list of roles
+     */
+    private static List<Role> generateRoles() {
+        List<Role> roles = new ArrayList<>();
+        Role roleAdmin = new Role(ERole.ROLE_ADMIN);
+        Role roleModerator = new Role(ERole.ROLE_MODERATOR);
+        Role roleUser = new Role(ERole.ROLE_USER);
+        roles.add(roleAdmin);
+        roles.add(roleModerator);
+        roles.add(roleUser);
+        return roles;
+    }
+
+    /**
+     * A method that generates 2 users and assigns roles to them
+     *
+     * @param roles
+     */
+    private void generateUsers(List<Role> roles) {
+        AppUser user1 = new AppUser("john", "john@mail.com", "1234");
+        AppUser user2 = new AppUser("jake", "jake@mail.com", "1234");
+        List<AppUser> users = new ArrayList<>();
+        user1.setRoles(Set.of(roles.get(0)));
+        user2.setRoles(Set.of(roles.get(1)));
+        userService.saveUser(user1);
+        userService.saveUser(user2);
+    }
+
+    /**
      * A method that generates owner instances
+     *
      * @return a list of owners
      */
     private static List<Owner> generateOwners() {
         List<Owner> owners = new ArrayList<>();
-        Owner owner1 = new Owner("150250350", "John", "Homes", "50 7701 Avonlan Way 50, Lloydminster, Canada", "+15877890714", "john@mail.com", "johnHomes", "secret1!@");
-        Owner owner2 = new Owner("150250351", "Thomas", "Burton", "50 7701 Clifsay Road 11  Lloydminster, Canada", "+15877898000", "thomas@mail.com", "thomasBurton", "secret2##");
-        Owner owner3 = new Owner("150250352", "Anna", "Harris", "50 7701 Barnfil Road 20  Lloydminster, Canada", "+15877899000", "anna@mail.com", "annaHarris", "secret3!!");
-        owners.add(owner1);
-        owners.add(owner2);
-        owners.add(owner3);
+
+        String[] fNames = new String[]{"Wade", "Dave", "Seth", "Connor", "Deborah", "Stella", "Loretta", "Leona", "Alison", "Connor", "Deborah", "Stella"};
+        String[] lNames = new String[]{"Miller", "Smith", "Perry", "Warburton", "Stanley", "Guzman", "Francis", "Moody", "Sherman", "Garcia", "Lee", "Gonzalez", "Kennedy", "Saunders", "Fisher", "Foreman", "Knowles", "Newton", "Erickson", "Norman", "White", "Ford"};
+        String[] addresses = new String[]{"50 7701 Avonlan Way 50, Lloydminster, Canada", "50 7701 Clifsay Road 11  Lloydminster, Canada", "50 7701 Barnfil Road 20  Lloydminster, Canada"};
+        String[] phoneNumbers = new String[]{"+15877890714", "+15877898000", "+15877899000"};
+        String[] symbols = new String[]{"!", "-", ".", "_"};
+        int vatNumber;
+        String randomSymbol1, fName, lName, email, username, password;
+        for (int i = 0; i < lNames.length; i++) {
+            vatNumber = 150250350 + i;
+            randomSymbol1 = symbols[(int) (symbols.length * Math.random())];
+            fName = fNames[(int) (Math.random() * fNames.length)];
+            lName = lNames[i];
+            email = fName.toLowerCase() + lName + "@mail.com";
+            username = fName.toLowerCase() + lName;
+            password = fName.toLowerCase() + lName + randomSymbol1;
+            Owner tempOwner = new Owner(String.valueOf(vatNumber), fName, lName, addresses[(int) (Math.random() * addresses.length)], phoneNumbers[(int) (Math.random() * phoneNumbers.length)], email, username, password);
+            owners.add(tempOwner);
+        }
         return owners;
     }
 
     /**
      * A method that generates property instances
+     *
      * @return a list of properties
      */
     private static List<Property> generateProperties() {
@@ -69,14 +128,16 @@ public class PopulateDataToDb {
         Property property1 = new Property("123567890", "50 7701 Boucherleche Pathway 50, Lloydminster, Canada", 1990, PropertyType.FLAT);
         Property property2 = new Property("123567891", "50 7701 Brown Bear Street 5, Lloydminster, Canada", 2005, PropertyType.DETACHED);
         Property property3 = new Property("123567892", "50 7701 Abbot's Road 32, Lloydminster, Canada", 2020, PropertyType.SEMIDETACHED);
-        properties.add(property1);
-        properties.add(property2);
-        properties.add(property3);
+        Property property4 = new Property("123567893", "50 7701 Boucherleche Pathway 50, Lloydminster, Canada", 1991, PropertyType.FLAT);
+        Property property5 = new Property("123567894", "50 7701 Brown Bear Street 5, Lloydminster, Canada", 2007, PropertyType.DETACHED);
+        Property property6 = new Property("123567895", "50 7701 Abbot's Road 32, Lloydminster, Canada", 2019, PropertyType.SEMIDETACHED);
+        properties.addAll(List.of(property1, property2, property3, property4, property5, property6));
         return properties;
     }
 
     /**
      * A method that generates repair instances
+     *
      * @return a list of repairs
      */
     private static List<Repair> generateRepairs() {
@@ -100,7 +161,6 @@ public class PopulateDataToDb {
     }
 
     /**
-     *
      * @param properties
      * @param owners
      * @return matches randomly properties and owners and return a list of updated properties with completed the fields owner, ownerVatNumber
@@ -116,7 +176,6 @@ public class PopulateDataToDb {
     }
 
     /**
-     *
      * @param properties
      * @param repairs
      * @return matches randomly properties and repairs and return a list of updated repairs with completed the field property
@@ -128,5 +187,4 @@ public class PopulateDataToDb {
         log.info("Properties and repairs were matched!");
         return repairs;
     }
-
 }
