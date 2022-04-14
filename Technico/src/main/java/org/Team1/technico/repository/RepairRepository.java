@@ -12,7 +12,7 @@ import java.util.List;
 public interface RepairRepository extends JpaRepository<Repair, Integer> {
     @Query("select r from Repair r where r.registrationDate between ?1 and ?2")
     List<Repair> findByRegistrationDateIsBetween(LocalDate registrationDateStart, LocalDate registrationDateEnd);
-    List<Repair> findByProperty_Owner_Id(Integer id);
+    List<Repair> findByProperty_Owner_Id(Integer ownerId);
 
 
 }

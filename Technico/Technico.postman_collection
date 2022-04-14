@@ -1,0 +1,985 @@
+{
+	"info": {
+		"_postman_id": "7fcfcb61-e5c9-4c08-91f0-77901f43a2b2",
+		"name": "TechnicoTeam1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OwnerEndpoints",
+			"item": [
+				{
+					"name": "Update owner",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS90b2tlbi9yZWZyZXNoIiwiZXhwIjoxNjQ5OTM0NTY1fQ.78C87ldxAK2SuQJocIwf3pcRNTVSpqcLakhTXkeHu2g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"vatNumber\": \"150250349\",\r\n        \"firstName\": \"Connor\",\r\n        \"lastName\": \"Miller\",\r\n        \"address\": \"50 7701 Barnfil Road 20  Lloydminster, Canada\",\r\n        \"phoneNumber\": \"+15877898000\",\r\n        \"email\": \"connorMiller@mail.com\",\r\n        \"username\": \"connorMiller\",\r\n        \"password\": \"connorMiller.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/owners/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create owner1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS90b2tlbi9yZWZyZXNoIiwiZXhwIjoxNjQ5OTM0NTY1fQ.78C87ldxAK2SuQJocIwf3pcRNTVSpqcLakhTXkeHu2g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vatNumber\": \"111222333\",\r\n    \"firstName\" : \"Nick\",\r\n    \"lastName\" : \"Kevin\",\r\n    \"address\" : \"Papagou 50\",\r\n    \"phoneNumber\" : \"2105009000\",\r\n    \"email\" : \"nick@mail.com\",\r\n    \"username\" : \"nickusername\",\r\n    \"password\" : \"password1$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/owners",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get owner",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTkzMzg5OX0.htiEx2SWIKkw47g4ZeMvRtbd6Jq28ITcw2BHlA5AOdw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/owners/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Owner Pagination",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0OTM3Mn0.8hmX89Zc8JypBHxDjp6UmCgRFsihZSVhRua6pvUMT2A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/owners/paged?subVatNumber=35&page=2&size=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "subVatNumber",
+									"value": "35"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get properties for owner",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTkzMzg5OX0.htiEx2SWIKkw47g4ZeMvRtbd6Jq28ITcw2BHlA5AOdw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/owners/11/properties",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners",
+								"11",
+								"properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get owner (search params: vatNumber, email)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTkzMzg5OX0.htiEx2SWIKkw47g4ZeMvRtbd6Jq28ITcw2BHlA5AOdw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/owners?vatNumber=150250351",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners"
+							],
+							"query": [
+								{
+									"key": "vatNumber",
+									"value": "150250351"
+								},
+								{
+									"key": "email",
+									"value": "connorMiller@mail.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create property for owner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MTc0OH0.LuUH31_Gtv_sYLoqC1AE43Qgj8MYQjnSkIxSFYXthV4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"identityE9\":\"111222554\",\"address\":\"Karamanli 10\",\"constructionYear\":1950,\"propertyType\": 2}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/owners/1/properties",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners",
+								"1",
+								"properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete owner",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS90b2tlbi9yZWZyZXNoIiwiZXhwIjoxNjQ5OTM1MzI4fQ.WMN69cuJkvYfdh2RC0xUl9UFHnicDgysqLRMdZd6qCI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/owners/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get properties of owner",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS90b2tlbi9yZWZyZXNoIiwiZXhwIjoxNjQ5OTM1MzI4fQ.WMN69cuJkvYfdh2RC0xUl9UFHnicDgysqLRMdZd6qCI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/owners/1/properties/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"owners",
+								"1",
+								"properties",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PropertyEndpoints",
+			"item": [
+				{
+					"name": "Create repair for property",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MjQyM30.OIP9vVXrkFc9aV9i3zlQJSdaut7uzaX0Z32Ri7N4CJE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"registrationDate\": \"2022-04-14\",\r\n\"completionDate\": \"2024-04-14\",\r\n\"repairStatus\": \"PENDING\",\r\n\"repairType\": \"PAINTING\",\r\n\"cost\": 10000,\r\n\"description\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/properties/1/repairs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"properties",
+								"1",
+								"repairs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update property",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MTA1Nn0.VoXkKZCaT2rmCnRSbQygptM45DdJN36_Z4gcF7DDw9Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identityE9\": \"111222555\",\r\n    \"address\": \"Karamanli 10\",\r\n    \"constructionYear\": 1990,\r\n    \"propertyType\": \"FLAT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/properties/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"properties",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get property",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MTA1Nn0.VoXkKZCaT2rmCnRSbQygptM45DdJN36_Z4gcF7DDw9Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/properties",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get properties (search params: id, ownerVatNumber)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MTA1Nn0.VoXkKZCaT2rmCnRSbQygptM45DdJN36_Z4gcF7DDw9Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/properties/?vatNumber=150250352",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"properties",
+								""
+							],
+							"query": [
+								{
+									"key": "identityE9",
+									"value": "123567892",
+									"disabled": true
+								},
+								{
+									"key": "vatNumber",
+									"value": "150250352"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get repairs by propertyId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MTA1Nn0.VoXkKZCaT2rmCnRSbQygptM45DdJN36_Z4gcF7DDw9Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/properties/1/repairs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"properties",
+								"1",
+								"repairs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete property",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MTc0OH0.LuUH31_Gtv_sYLoqC1AE43Qgj8MYQjnSkIxSFYXthV4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/properties/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"properties",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RepairEndpoints",
+			"item": [
+				{
+					"name": "Update repair",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MjQyM30.OIP9vVXrkFc9aV9i3zlQJSdaut7uzaX0Z32Ri7N4CJE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"completionDate\": \"2024-01-25\",\"repairStatus\" : 2,\"repairType\" : 1,\"cost\" : 100.0,\"description\" : \"description!£$\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/repairs/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"repairs",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get repair",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MjQyM30.OIP9vVXrkFc9aV9i3zlQJSdaut7uzaX0Z32Ri7N4CJE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/repairs/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"repairs",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get repairs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MjQyM30.OIP9vVXrkFc9aV9i3zlQJSdaut7uzaX0Z32Ri7N4CJE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/repairs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"repairs"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2022-01-01",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2022-02-02",
+									"disabled": true
+								},
+								{
+									"key": "ownerId",
+									"value": "4",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete repair",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWtlIiwicm9sZXMiOlsiUk9MRV9NT0RFUkFUT1IiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTk0MTA1Nn0.VoXkKZCaT2rmCnRSbQygptM45DdJN36_Z4gcF7DDw9Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/repairs/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"repairs",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login-Token",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/login?username=jake&password=1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "jake",
+									"description": "Fill the username you want"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"description": "Fill the password for the user you selected"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/api/token/refresh",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY0OTkyODU5OX0.AbP6GoiLALTevcfBVhMJANdboo0LfVWjcw29c_KnveY",
+								"description": "Insert your refresh token that got after the log in, in order to get a new one access token\n",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/token/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"token",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "UserEndpoints",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL2xvZ2luIiwiZXhwIjoxNjQ5OTI4MjE3fQ.gEvkq4-zy_KqYli8Ksvj2Dq1YMWHNQfms6BBNOENYkg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"newuser\",\r\n  \"email\": \"newuser@mail.com\",\r\n  \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyIiwicm9sZXMiOltdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL2xvZ2luIiwiZXhwIjoxNjQ5OTMwMjYyfQ.__D9dI6z2Gm8MllffhZ0SjY-zPTZddL_vcRMEYpWlRY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users?username=newuser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "newuser"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add role to user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyIiwicm9sZXMiOltdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL2xvZ2luIiwiZXhwIjoxNjQ5OTMwMjYyfQ.__D9dI6z2Gm8MllffhZ0SjY-zPTZddL_vcRMEYpWlRY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"newuser\",\r\n  \"roleName\": \"ROLE_ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/role/addtouser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"role",
+								"addtouser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
