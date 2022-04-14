@@ -96,12 +96,25 @@ public class PopulateDataToDb {
      */
     private static List<Owner> generateOwners() {
         List<Owner> owners = new ArrayList<>();
-        Owner owner1 = new Owner("150250350", "John", "Homes", "50 7701 Avonlan Way 50, Lloydminster, Canada", "+15877890714", "john@mail.com", "johnHomes", "secret1!@");
-        Owner owner2 = new Owner("150250351", "Thomas", "Burton", "50 7701 Clifsay Road 11  Lloydminster, Canada", "+15877898000", "thomas@mail.com", "thomasBurton", "secret2##");
-        Owner owner3 = new Owner("150250352", "Anna", "Harris", "50 7701 Barnfil Road 20  Lloydminster, Canada", "+15877899000", "anna@mail.com", "annaHarris", "secret3!!");
-        owners.add(owner1);
-        owners.add(owner2);
-        owners.add(owner3);
+
+        String[] fNames = new String[]{"Wade", "Dave", "Seth", "Connor", "Deborah", "Stella", "Loretta", "Leona", "Alison", "Connor", "Deborah", "Stella"};
+        String[] lNames = new String[]{"Miller", "Smith", "Perry", "Warburton", "Stanley", "Guzman", "Francis", "Moody", "Sherman", "Garcia", "Lee", "Gonzalez", "Kennedy", "Saunders", "Fisher", "Foreman", "Knowles", "Newton", "Erickson", "Norman", "White", "Ford"};
+        String[] addresses = new String[]{"50 7701 Avonlan Way 50, Lloydminster, Canada", "50 7701 Clifsay Road 11  Lloydminster, Canada", "50 7701 Barnfil Road 20  Lloydminster, Canada"};
+        String[] phoneNumbers = new String[]{"+15877890714", "+15877898000", "+15877899000"};
+        String[] symbols = new String[]{"!", "-", ".", "_"};
+        int vatNumber;
+        String randomSymbol1, fName, lName, email, username, password;
+        for (int i = 0; i < lNames.length; i++) {
+            vatNumber = 150250350 + i;
+            randomSymbol1 = symbols[(int) (symbols.length * Math.random())];
+            fName = fNames[(int) (Math.random() * fNames.length)];
+            lName = lNames[i];
+            email = fName.toLowerCase() + lName + "@mail.com";
+            username = fName.toLowerCase() + lName;
+            password = fName.toLowerCase() + lName + randomSymbol1;
+            Owner tempOwner = new Owner(String.valueOf(vatNumber), fName, lName, addresses[(int) (Math.random() * addresses.length)], phoneNumbers[(int) (Math.random() * phoneNumbers.length)], email, username, password);
+            owners.add(tempOwner);
+        }
         return owners;
     }
 
@@ -115,9 +128,10 @@ public class PopulateDataToDb {
         Property property1 = new Property("123567890", "50 7701 Boucherleche Pathway 50, Lloydminster, Canada", 1990, PropertyType.FLAT);
         Property property2 = new Property("123567891", "50 7701 Brown Bear Street 5, Lloydminster, Canada", 2005, PropertyType.DETACHED);
         Property property3 = new Property("123567892", "50 7701 Abbot's Road 32, Lloydminster, Canada", 2020, PropertyType.SEMIDETACHED);
-        properties.add(property1);
-        properties.add(property2);
-        properties.add(property3);
+        Property property4 = new Property("123567893", "50 7701 Boucherleche Pathway 50, Lloydminster, Canada", 1991, PropertyType.FLAT);
+        Property property5 = new Property("123567894", "50 7701 Brown Bear Street 5, Lloydminster, Canada", 2007, PropertyType.DETACHED);
+        Property property6 = new Property("123567895", "50 7701 Abbot's Road 32, Lloydminster, Canada", 2019, PropertyType.SEMIDETACHED);
+        properties.addAll(List.of(property1, property2, property3, property4, property5, property6));
         return properties;
     }
 

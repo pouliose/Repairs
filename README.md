@@ -24,7 +24,7 @@ work on their property.</li></ul>
 <li>Download it as ZIP file</li>
 </ol>
 
-<p>B. Create a database with name "Team1Technico" either manually or with the use of the 
+<p>B. Manually create a database with name "Team1Technico" 
 docker compose</p>
 <p>C. Run the application from your preferable IDE</p>
 
@@ -53,6 +53,7 @@ where, you should include in each request header a header with (key,value) : ("A
 <ul><li>Java 17</li>
 <li>Spring Framework</li>
 <li>MS SQL Server</li>
+<li>JSON Web Token</li>
 <li>Swagger</li></ul>
 
 

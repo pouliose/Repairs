@@ -43,6 +43,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<List<AppUser>> getUser(@RequestParam(name = "username", required = false) String username) {
+        if(username != null && username != "")
+            return ResponseEntity.ok().body(List.of(userService.getUser(username)));
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/user/save")
     public ResponseEntity<AppUser> saveUser(@RequestBody AppUser user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
