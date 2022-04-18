@@ -5,10 +5,7 @@
 <h1>Team1</h1>
 </div>
 <h3>Members</h3>
-<p><ul><li>Alexandros Atsalakis</li>
-<li>Stavroula Kampylh</li> 
-<li>Evangelos Poulios</li></ul>
-<br>
+<p>Alexandros Atsalakis, Stavroula Kampylh, Evangelos Poulios</p>
 
 ## About
 <p>A REST API that will support basic needs for a renovation contractor agency. Some of its needs include: </p>
@@ -44,6 +41,8 @@ user1(username: john, password: 1234, role: ROLE_ADMIN), user2(username: jake, p
 <li>Afterwards, you have to install a browser extension like <a href="https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj?hl=en">ModHeader</a> for Chrome. 
 The extension enables the option for custom request and response http headers. And you follow the same procedure (like Postman) 
 where, you should include in each request header a header with (key,value) : ("Authorization", "Bearer " + the accessToken that you got from the client)</li></ul>
+
+Watch a quick demo <a href="https://www.youtube.com/watch?v=roHYedkTXjc&t=10s&ab_channel=EvangelosPoulios">video</a>
 
 <p style="text-align: right">(<a href="#top">back to top</a>)</p>
 
